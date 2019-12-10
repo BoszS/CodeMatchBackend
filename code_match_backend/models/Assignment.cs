@@ -8,8 +8,10 @@ namespace code_match_backend.models
     public class Assignment
     {
         public long AssignmentID { get; set; }
+        public string Name { get; set; }
         public string Description { get; set; }
-        public string Location { get; set; }
+        public string StreetAdress { get; set; }
+        public int PostalCode { get; set; }
         public string Status { get; set; }
         public Company Company { get; set; }
         public ICollection<Application> Applications { get; set; }

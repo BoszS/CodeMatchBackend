@@ -18,6 +18,8 @@ namespace code_match_backend.models
         public Maker Maker { get; set; }
         public long? CompanyID { get; set; }
         public Company Company { get; set; }
+        public ICollection<Review> ReceivedReviews { get; set; }
+        public ICollection<Review> SendReviews { get; set; }
 
         [NotMapped]
         public string Token { get; set; }

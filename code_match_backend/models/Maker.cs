@@ -10,6 +10,7 @@ namespace code_match_backend.models
         public long MakerID { get; set; }
         public string Firstname { get; set; }
         public string Lastname { get; set; }
+        public string Nickname { get; set; }
         public DateTime Dob { get; set; }
         public string LinkedIn { get; set; }
         public string Experience { get; set; }

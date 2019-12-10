@@ -38,8 +38,21 @@ namespace code_match_backend.models
             modelBuilder.Entity<CompanyTag>().ToTable("CompanyTag");
             modelBuilder.Entity<Maker>().ToTable("Maker");
             modelBuilder.Entity<MakerTag>().ToTable("MakerTag");
-            modelBuilder.Entity<Review>().ToTable("Review");
             modelBuilder.Entity<Tag>().ToTable("Tag");
+            modelBuilder.Entity<Review>()
+                .HasKey(e => new { e.ReviewID });
+
+            modelBuilder.Entity<Review>()
+                .HasOne(e => e.Sender)
+                .WithMany(e => e.SendReviews)
+                .HasForeignKey(e => e.UserIDSender)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Review>()
+                .HasOne(e => e.Receiver)
+                .WithMany(e => e.ReceivedReviews)
+                .HasForeignKey(e => e.UserIDReceiver)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

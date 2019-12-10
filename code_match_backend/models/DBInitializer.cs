@@ -19,8 +19,25 @@ namespace code_match_backend.models
             context.Permissions.AddRange(
             new Permission
             {
-                Name = "permission 1"
-            });
+                Name = "MakerSearchApplyAssignemnt"
+            },
+            new Permission
+            {
+                Name = "CompanyCreateAssignment"
+            },
+            new Permission
+            {
+                Name = "AdminCRUDReview"
+            },
+            new Permission
+            {
+                Name = "AdminCRUDUsers"
+            },
+            new Permission
+            {
+                Name = "AdminCRUDAssignments"
+            }
+            );
             context.SaveChanges();
 
             context.Roles.AddRange(
@@ -31,6 +48,10 @@ namespace code_match_backend.models
             new Role 
             { 
                 Name = "Company"
+            },
+            new Role
+            {
+                Name= "Admin"
             }
             );
             context.SaveChanges();
@@ -45,7 +66,8 @@ namespace code_match_backend.models
 
             context.Companies.AddRange(new Company
             {
-                Location = "location company"
+                StreetAdress = "Schoolstraat",
+                PostalCode = 2260
             });
 
             context.SaveChanges();
@@ -83,7 +105,8 @@ namespace code_match_backend.models
             context.Assignments.AddRange(new Assignment
             {
                 Status = "...",
-                Location = "assignment location",
+                StreetAdress = "Schoolstraat",
+                PostalCode = 2260,
                 Company = context.Companies.FirstOrDefault(),
                 Description = "This is the description of the assignment"
             });

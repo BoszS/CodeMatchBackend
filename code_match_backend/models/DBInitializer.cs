@@ -94,14 +94,25 @@ namespace code_match_backend.models
 
             context.SaveChanges();
 
-            context.Makers.AddRange(new Maker
+            context.Makers.AddRange(
+            new Maker
             {
                 Dob = new DateTime(1998, 3, 12),
                 Experience = "none",
                 Firstname = "te",
                 Lastname = "st",
                 LinkedIn = "www.link.com",
-            });
+            },
+            new Maker
+            {
+                Dob = new DateTime(1998, 05, 11),
+                Experience = "C#, Angular",
+                Firstname = "Bosz",
+                Lastname = "Srisan",
+                LinkedIn = "www.linkedIn/BoszSrisan",
+                Nickname = "Bozie",
+            }
+            );
             context.SaveChanges();
 
             context.Users.AddRange(new User
@@ -128,6 +139,15 @@ namespace code_match_backend.models
                 Password = "admin123",
                 Phonenumber = "987654321",
                 Role = context.Roles.SingleOrDefault(r => r.RoleID == 3),
+            },
+            new User
+            {
+                Biography = "ITF student",
+                Email = "bosz.srisan@live.com",
+                Password = "bozie",
+                Phonenumber = "0483476363",
+                Role = context.Roles.FirstOrDefault(),
+                MakerID = 2
             }
             );
 

@@ -73,6 +73,48 @@ namespace code_match_backend.Controllers
             return user;
         }
 
+        [HttpGet("user/info/{id}")]
+        public async Task<ActionResult<User>> GetUserWithType(long? id)
+        {
+            if (id == null)
+            {
+                return BadRequest();
+            }
+
+            var user = await _context.Users.FindAsync(id);
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            if (user.CompanyID != null)
+            {
+
+                var userWithType = await _context.Users
+                    .Include(x => x.Company)
+                    .FirstOrDefaultAsync(x => x.CompanyID == user.CompanyID);
+
+                userWithType.Password = null;
+
+                return userWithType;
+            }
+
+            if (user.MakerID != null)
+            {
+                var userWithType = await _context.Users
+                    .Include(x => x.Maker)
+                    .FirstOrDefaultAsync(x => x.MakerID == user.MakerID);
+
+                userWithType.Password = null;
+
+                return userWithType;
+            }
+            
+
+            return NotFound();
+        }
+
         // PUT: api/Users/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutUser(long id, User user)

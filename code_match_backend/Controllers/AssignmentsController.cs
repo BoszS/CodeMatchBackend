@@ -103,9 +103,9 @@ namespace code_match_backend.Controllers
             return assignments;
         }
 
-        // GET: api/Assignments/company
+        // GET: api/Assignments/maker
         [Authorize]
-        [HttpGet("company/{id}")]
+        [HttpGet("maker/{id}")]
         public async Task<ActionResult<IEnumerable<Assignment>>> GetAssignmentsByMaker(long id)
         {
             var maker = await _context.Makers.FindAsync(id);
@@ -121,9 +121,9 @@ namespace code_match_backend.Controllers
 
 
 
-        // GET: api/Assignments/inProgress/company
+        // GET: api/Assignments/inProgress/maker
         [Authorize]
-        [HttpGet("inProgress/company/{id}")]
+        [HttpGet("inProgress/maker/{id}")]
         public async Task<ActionResult<IEnumerable<Assignment>>> GetInProgressAssignmentsByMaker(long id)
         {
 
@@ -138,9 +138,9 @@ namespace code_match_backend.Controllers
             return lijst;
         }
 
-        // GET: api/Assignments/completed/company
+        // GET: api/Assignments/completed/maker
         [Authorize]
-        [HttpGet("completed/company/{id}")]
+        [HttpGet("completed/maker/{id}")]
         public async Task<ActionResult<IEnumerable<Assignment>>> GetCompletedAssignmentsByMaker(long id)
         {
             var maker = await _context.Makers.FindAsync(id);

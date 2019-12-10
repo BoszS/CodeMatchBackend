@@ -45,22 +45,44 @@ namespace code_match_backend.models
             {
                 Name = "Maker"
             },
-            new Role 
-            { 
+            new Role
+            {
                 Name = "Company"
             },
             new Role
             {
-                Name= "Admin"
+                Name = "Admin"
             }
             );
             context.SaveChanges();
 
-            context.RolePermissions.AddRange(new RolePermission
+            context.RolePermissions.AddRange(
+            new RolePermission
             {
                 Permission = context.Permissions.FirstOrDefault(),
                 Role = context.Roles.FirstOrDefault()
-            });
+            },
+            new RolePermission
+            {
+                Permission = context.Permissions.SingleOrDefault(p => p.PermissionID == 2),
+                Role = context.Roles.SingleOrDefault(r => r.RoleID == 2)
+            },
+            new RolePermission
+            {
+                Permission = context.Permissions.SingleOrDefault(p => p.PermissionID == 3),
+                Role = context.Roles.SingleOrDefault(r => r.RoleID == 3)
+            },
+            new RolePermission
+            {
+                Permission = context.Permissions.SingleOrDefault(p => p.PermissionID == 4),
+                Role = context.Roles.SingleOrDefault(r => r.RoleID == 3)
+            },
+            new RolePermission
+            {
+                Permission = context.Permissions.SingleOrDefault(p => p.PermissionID == 5),
+                Role = context.Roles.SingleOrDefault(r => r.RoleID == 3)
+            }
+            );
 
             context.SaveChanges();
 
@@ -86,30 +108,57 @@ namespace code_match_backend.models
             {
                 Role = context.Roles.FirstOrDefault(),
                 Biography = "biobio",
-                Email = "test@test.com",
-                Password = "test123",
+                Email = "maker@test.com",
+                Password = "maker123",
                 Phonenumber = "123456789",
                 MakerID = 1
             }, new User
             {
                 Biography = "user 2 biography",
-                Email = "test2@test.com",
-                Password = "test123",
+                Email = "company@test.com",
+                Password = "company123",
                 Phonenumber = "987654321",
                 Role = context.Roles.SingleOrDefault(r => r.RoleID == 2),
                 CompanyID = 1
-            });
+            },
+            new User
+            {
+                Biography = "administrator",
+                Email = "admin@test.com",
+                Password = "admin123",
+                Phonenumber = "987654321",
+                Role = context.Roles.SingleOrDefault(r => r.RoleID == 3),
+            }
+            );
 
             context.SaveChanges();
 
-            context.Assignments.AddRange(new Assignment
+            context.Assignments.AddRange(
+            new Assignment
             {
-                Status = "...",
+                Status = "Initial",
                 StreetAdress = "Schoolstraat",
                 PostalCode = 2260,
                 Company = context.Companies.FirstOrDefault(),
-                Description = "This is the description of the assignment"
-            });
+                Description = "Webdesign"
+            },
+            new Assignment
+            {
+                Status = "InProgress",
+                StreetAdress = "Schoolstraat",
+                PostalCode = 2260,
+                Company = context.Companies.FirstOrDefault(),
+                Description = "Datamodeling"
+            },
+            new Assignment
+            {
+                Status = "Completed",
+                StreetAdress = "Schoolstraat",
+                PostalCode = 2260,
+                Company = context.Companies.FirstOrDefault(),
+                Description = "Backend .NET"
+            }
+            );
 
             context.SaveChanges();
 
@@ -126,8 +175,8 @@ namespace code_match_backend.models
             {
                 Assignment = context.Assignments.FirstOrDefault(),
                 Description = "very good",
-                Receiver = context.Users.Where(r => r.Email == "test@test.com").Single(),
-                Sender = context.Users.Where(r => r.Email == "test2@test.com").Single()
+                Receiver = context.Users.Where(r => r.Email == "maker@test.com").Single(),
+                Sender = context.Users.Where(r => r.Email == "company@test.com").Single()
             });
 
             context.SaveChanges();
@@ -139,7 +188,33 @@ namespace code_match_backend.models
             new Tag
             {
                 Name = "back"
-            });
+            },
+            new Tag
+            {
+                Name = "English"
+            },
+            new Tag
+            {
+                Name = "French"
+            },
+            new Tag
+            {
+                Name = "Dutch"
+            },
+            new Tag
+            {
+                Name = "Design"
+            },
+            new Tag
+            {
+                Name = "Datamodeling"
+            },
+            new Tag
+            {
+                Name = "Teamwork"
+            }
+
+            );
 
             context.SaveChanges();
 
@@ -156,6 +231,7 @@ namespace code_match_backend.models
                 Company = context.Companies.FirstOrDefault(),
                 Tag = context.Tags.Single(r => r.Name == "back")
             });
-            context.SaveChanges();}
+            context.SaveChanges();
         }
+    }
 }

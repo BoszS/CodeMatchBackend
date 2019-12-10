@@ -31,14 +31,33 @@ namespace code_match_backend.Controllers
         // GET: api/Assignments/
         [Authorize]
         [HttpGet("company/{id}")]
-        public async Task<ActionResult<IEnumerable<Assignment>>> GetAssignmentsByCompany(int companyId)
+        public async Task<ActionResult<IEnumerable<Assignment>>> GetAssignmentsByCompany(long id)
         {
             var assignmentsList =  await _context.Assignments.ToListAsync();
-            var company = await _context.Companies.FindAsync(companyId);
+            var company = await _context.Companies.FindAsync(id);
             var assignments = new List<Assignment>();
             foreach (var assignment in assignmentsList)
             {
                 if (assignment.Company == company)
+                {
+                    assignments.Add(assignment);
+                }
+            }
+
+            return assignments;
+        }
+
+        // GET: api/Assignments/
+        [Authorize]
+        [HttpGet("inProgress/company/{id}")]
+        public async Task<ActionResult<IEnumerable<Assignment>>> GetInProgressAssignmentsByCompany(long id)
+        {
+            var assignmentsList = await _context.Assignments.ToListAsync();
+            var company = await _context.Companies.FindAsync(id);
+            var assignments = new List<Assignment>();
+            foreach (var assignment in assignmentsList)
+            {
+                if (assignment.Company == company && assignment.Status== "InProgress")
                 {
                     assignments.Add(assignment);
                 }

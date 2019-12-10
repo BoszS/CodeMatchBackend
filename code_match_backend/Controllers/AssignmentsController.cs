@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using code_match_backend.models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace code_match_backend.Controllers
 {
@@ -28,15 +29,16 @@ namespace code_match_backend.Controllers
         }
 
         // GET: api/Assignments/
+        [Authorize]
         [HttpGet("company/{id}")]
-        public async Task<ActionResult<IEnumerable<Assignment>>> GetAssignmentsByCompany(int userId)
+        public async Task<ActionResult<IEnumerable<Assignment>>> GetAssignmentsByCompany(int companyId)
         {
             var assignmentsList =  await _context.Assignments.ToListAsync();
-            var user = await _context.Users.FindAsync(userId);
+            var company = await _context.Companies.FindAsync(companyId);
             var assignments = new List<Assignment>();
             foreach (var assignment in assignmentsList)
             {
-                if (assignment.Company == user.Company)
+                if (assignment.Company == company)
                 {
                     assignments.Add(assignment);
                 }

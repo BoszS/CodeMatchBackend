@@ -27,6 +27,24 @@ namespace code_match_backend.Controllers
             return await _context.Assignments.ToListAsync();
         }
 
+        // GET: api/Assignments/
+        [HttpGet("company/{id}")]
+        public async Task<ActionResult<IEnumerable<Assignment>>> GetAssignmentsByCompany(int userId)
+        {
+            var assignmentsList =  await _context.Assignments.ToListAsync();
+            var user = await _context.Users.FindAsync(userId);
+            var assignments = new List<Assignment>();
+            foreach (var assignment in assignmentsList)
+            {
+                if (assignment.Company == user.Company)
+                {
+                    assignments.Add(assignment);
+                }
+            }
+
+            return assignments;
+        }
+
         // GET: api/Assignments/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Assignment>> GetAssignment(long id)

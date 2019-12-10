@@ -43,7 +43,10 @@ namespace code_match_backend.Services
                 Subject = new ClaimsIdentity(new Claim[]
                 {
                     new Claim("UserID", user.UserID.ToString()),
-                    new Claim("Email", user.Email)
+                    new Claim("Email", user.Email),
+                    new Claim("MakerID", user.MakerID.ToString()),
+                    new Claim("CompanyID", user.CompanyID.ToString()),
+                    new Claim(ClaimTypes.Role, user.Role.Name)
                 }),
 
                 Expires = DateTime.UtcNow.AddDays(7),

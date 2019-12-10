@@ -8,6 +8,7 @@ namespace code_match_backend.models
     public class Company
     {
         public long CompanyID { get; set; }
+        public string Name { get; set; }
         public string StreetAdress { get; set; }
         public int PostalCode { get; set; }
         public ICollection<Assignment> Assignments { get; set; }

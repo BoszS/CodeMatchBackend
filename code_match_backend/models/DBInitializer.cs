@@ -160,7 +160,8 @@ namespace code_match_backend.models
                 StreetAdress = "Schoolstraat",
                 PostalCode = 2260,
                 Company = context.Companies.FirstOrDefault(),
-                Description = "Webdesign"
+                Description = "Webdesign",
+                Name = "De bakkerij website"
             },
             new Assignment
             {
@@ -168,7 +169,8 @@ namespace code_match_backend.models
                 StreetAdress = "Schoolstraat",
                 PostalCode = 2260,
                 Company = context.Companies.FirstOrDefault(),
-                Description = "Datamodeling"
+                Description = "Datamodeling",
+                Name = "Het bakkerij datamodel"
             },
             new Assignment
             {
@@ -176,7 +178,8 @@ namespace code_match_backend.models
                 StreetAdress = "Schoolstraat",
                 PostalCode = 2260,
                 Company = context.Companies.FirstOrDefault(),
-                Description = "Backend .NET"
+                Description = "Backend .NET",
+                Name = "De online bakkerij database"
             }
             );
 
@@ -232,8 +235,27 @@ namespace code_match_backend.models
             new Tag
             {
                 Name = "Teamwork"
+            },
+            new Tag
+            {
+                Name = "C#"
+            },
+            new Tag
+            {
+                Name = "Javascript"
+            },
+            new Tag
+            {
+                Name = "node.js"
+            },
+            new Tag
+            {
+                Name = "HTML"
+            },
+            new Tag
+            {
+                Name = "CSS"
             }
-
             );
 
             context.SaveChanges();

@@ -28,12 +28,12 @@ namespace code_match_backend.Controllers
             return await _context.Assignments.ToListAsync();
         }
 
-        // GET: api/Assignments/
+        // GET: api/Assignments/company
         [Authorize]
         [HttpGet("company/{id}")]
         public async Task<ActionResult<IEnumerable<Assignment>>> GetAssignmentsByCompany(long id)
         {
-            var assignmentsList =  await _context.Assignments.ToListAsync();
+            var assignmentsList = await _context.Assignments.ToListAsync();
             var company = await _context.Companies.FindAsync(id);
             var assignments = new List<Assignment>();
             foreach (var assignment in assignmentsList)
@@ -47,7 +47,26 @@ namespace code_match_backend.Controllers
             return assignments;
         }
 
-        // GET: api/Assignments/
+        // GET: api/Assignments/initial/company
+        [Authorize]
+        [HttpGet("initial/company/{id}")]
+        public async Task<ActionResult<IEnumerable<Assignment>>> GetInitialAssignmentsByCompany(long id)
+        {
+            var assignmentsList = await _context.Assignments.ToListAsync();
+            var company = await _context.Companies.FindAsync(id);
+            var assignments = new List<Assignment>();
+            foreach (var assignment in assignmentsList)
+            {
+                if (assignment.Company == company && assignment.Status == "Initial")
+                {
+                    assignments.Add(assignment);
+                }
+            }
+
+            return assignments;
+        }
+
+        // GET: api/Assignments/inProgress/company
         [Authorize]
         [HttpGet("inProgress/company/{id}")]
         public async Task<ActionResult<IEnumerable<Assignment>>> GetInProgressAssignmentsByCompany(long id)
@@ -57,13 +76,82 @@ namespace code_match_backend.Controllers
             var assignments = new List<Assignment>();
             foreach (var assignment in assignmentsList)
             {
-                if (assignment.Company == company && assignment.Status== "InProgress")
+                if (assignment.Company == company && assignment.Status == "InProgress")
+                {
+                    assignments.Add(assignment);
+                }
+            }
+            return assignments;
+        }
+
+        // GET: api/Assignments/completed/company
+        [Authorize]
+        [HttpGet("completed/company/{id}")]
+        public async Task<ActionResult<IEnumerable<Assignment>>> GetCompletedAssignmentsByCompany(long id)
+        {
+            var assignmentsList = await _context.Assignments.ToListAsync();
+            var company = await _context.Companies.FindAsync(id);
+            var assignments = new List<Assignment>();
+            foreach (var assignment in assignmentsList)
+            {
+                if (assignment.Company == company && assignment.Status == "Completed")
                 {
                     assignments.Add(assignment);
                 }
             }
 
             return assignments;
+        }
+
+        // GET: api/Assignments/company
+        [Authorize]
+        [HttpGet("company/{id}")]
+        public async Task<ActionResult<IEnumerable<Assignment>>> GetAssignmentsByMaker(long id)
+        {
+            var maker = await _context.Makers.FindAsync(id);
+            var applications = await _context.Applications.Where(m => m.Maker == maker && m.IsAccepted == true).Include(a => a.Assignment).ToListAsync();
+            var lijst = new List<Assignment>();
+            foreach(var app in applications)
+            {
+                lijst.Add(app.Assignment);
+            }
+
+            return lijst;
+        }
+
+
+
+        // GET: api/Assignments/inProgress/company
+        [Authorize]
+        [HttpGet("inProgress/company/{id}")]
+        public async Task<ActionResult<IEnumerable<Assignment>>> GetInProgressAssignmentsByMaker(long id)
+        {
+
+            var maker = await _context.Makers.FindAsync(id);
+            var applications = await _context.Applications.Where(m => m.Maker == maker && m.IsAccepted == true).Include(a => a.Assignment).Where(a => a.Assignment.Status=="InProgress").ToListAsync();
+            var lijst = new List<Assignment>();
+            foreach (var app in applications)
+            {
+                lijst.Add(app.Assignment);
+            }
+
+            return lijst;
+        }
+
+        // GET: api/Assignments/completed/company
+        [Authorize]
+        [HttpGet("completed/company/{id}")]
+        public async Task<ActionResult<IEnumerable<Assignment>>> GetCompletedAssignmentsByMaker(long id)
+        {
+            var maker = await _context.Makers.FindAsync(id);
+            var applications = await _context.Applications.Where(m => m.Maker == maker && m.IsAccepted == true).Include(a => a.Assignment).Where(a => a.Assignment.Status == "Completed").ToListAsync();
+            var lijst = new List<Assignment>();
+            foreach (var app in applications)
+            {
+                lijst.Add(app.Assignment);
+            }
+
+            return lijst;
         }
 
         // GET: api/Assignments/5

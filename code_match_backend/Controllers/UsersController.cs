@@ -73,6 +73,21 @@ namespace code_match_backend.Controllers
             return user;
         }
 
+        [HttpGet]
+        [Route("checkMail")]
+        public async Task<Boolean> checkMail(string mail)
+        {
+            try
+            {
+                await _context.Users.SingleAsync(e => e.Email == mail);
+
+                return true;
+            } catch
+            {
+                return false;
+            }
+        }
+
         // PUT: api/Users/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutUser(long id, User user)
@@ -107,7 +122,16 @@ namespace code_match_backend.Controllers
         [HttpPost]
         public async Task<ActionResult<User>> PostUser(User user)
         {
+            try
+            {
+                _context.Entry(user.Company).State = EntityState.Modified;
+            } catch
+            {
+                _context.Entry(user.Maker).State = EntityState.Modified;
+            }
+
             _context.Users.Add(user);
+
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetUser", new { id = user.UserID }, user);

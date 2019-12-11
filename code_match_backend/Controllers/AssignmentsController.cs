@@ -33,16 +33,8 @@ namespace code_match_backend.Controllers
         [HttpGet("company/{id}")]
         public async Task<ActionResult<IEnumerable<Assignment>>> GetAssignmentsByCompany(long id)
         {
-            var assignmentsList = await _context.Assignments.ToListAsync();
             var company = await _context.Companies.FindAsync(id);
-            var assignments = new List<Assignment>();
-            foreach (var assignment in assignmentsList)
-            {
-                if (assignment.Company == company)
-                {
-                    assignments.Add(assignment);
-                }
-            }
+            var assignments = await _context.Assignments.Where(m => m.Company == company).ToListAsync();
 
             return assignments;
         }
@@ -52,16 +44,8 @@ namespace code_match_backend.Controllers
         [HttpGet("initial/company/{id}")]
         public async Task<ActionResult<IEnumerable<Assignment>>> GetInitialAssignmentsByCompany(long id)
         {
-            var assignmentsList = await _context.Assignments.ToListAsync();
             var company = await _context.Companies.FindAsync(id);
-            var assignments = new List<Assignment>();
-            foreach (var assignment in assignmentsList)
-            {
-                if (assignment.Company == company && assignment.Status == "Initial")
-                {
-                    assignments.Add(assignment);
-                }
-            }
+            var assignments = await _context.Assignments.Where(m => m.Company == company && m.Status == "Initial").ToListAsync();
 
             return assignments;
         }
@@ -71,16 +55,9 @@ namespace code_match_backend.Controllers
         [HttpGet("inProgress/company/{id}")]
         public async Task<ActionResult<IEnumerable<Assignment>>> GetInProgressAssignmentsByCompany(long id)
         {
-            var assignmentsList = await _context.Assignments.ToListAsync();
             var company = await _context.Companies.FindAsync(id);
-            var assignments = new List<Assignment>();
-            foreach (var assignment in assignmentsList)
-            {
-                if (assignment.Company == company && assignment.Status == "InProgress")
-                {
-                    assignments.Add(assignment);
-                }
-            }
+            var assignments = await _context.Assignments.Where(m => m.Company == company && m.Status == "InProgress").ToListAsync();
+
             return assignments;
         }
 
@@ -89,16 +66,8 @@ namespace code_match_backend.Controllers
         [HttpGet("completed/company/{id}")]
         public async Task<ActionResult<IEnumerable<Assignment>>> GetCompletedAssignmentsByCompany(long id)
         {
-            var assignmentsList = await _context.Assignments.ToListAsync();
             var company = await _context.Companies.FindAsync(id);
-            var assignments = new List<Assignment>();
-            foreach (var assignment in assignmentsList)
-            {
-                if (assignment.Company == company && assignment.Status == "Completed")
-                {
-                    assignments.Add(assignment);
-                }
-            }
+            var assignments = await _context.Assignments.Where(m => m.Company == company && m.Status == "Completed").ToListAsync();      
 
             return assignments;
         }

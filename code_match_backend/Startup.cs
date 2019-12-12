@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using code_match_backend.Helpers;
@@ -78,7 +80,22 @@ namespace code_match_backend
                 ));
 
             services.AddSwaggerGen(c => {
-                c.SwaggerDoc("v1", new Info { Title = "My API", Version = "v1" });
+                c.SwaggerDoc("v1", new Info 
+                { 
+                    Title = "Application challenge: MatchIT API",
+                    Version = "v1",
+                    Description = "This is the ASP.NET Core Web API used for our application challenge backend",
+                    Contact = new Contact
+                    {
+                        Name = "Bosz Srisan, Brecht Snoeck, Maarten Schroons, Stijn Haerkens",
+                        Url = "https://github.com/BoszS/CodeMatchBackend"
+                    }
+                });
+
+                // Set the comments path for the Swagger JSON and UI.
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                c.IncludeXmlComments(xmlPath);
 
                 c.AddSecurityDefinition("Bearer", new ApiKeyScheme
                 {

@@ -21,7 +21,11 @@ namespace code_match_backend.Controllers
             _context = context;
         }
 
-        // GET: api/Assignments
+
+        /// <summary>
+        /// GET: all assignments
+        /// </summary>  
+        /// <returns>A list of all applications</returns>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Assignment>>> GetAssignments()
         {
@@ -33,7 +37,12 @@ namespace code_match_backend.Controllers
                 .ToListAsync();
         }
 
-        // GET: api/Assignments/company
+
+        /// <summary>
+        /// GET: all assignments that belong to a company
+        /// </summary>
+        /// <param name="id">The company id</param>   
+        /// <returns>The list of assignments that belong to the company</returns>
         [Authorize]
         [HttpGet("company/{id}")]
         public async Task<ActionResult<IEnumerable<Assignment>>> GetAssignmentsByCompany(long id)
@@ -44,7 +53,12 @@ namespace code_match_backend.Controllers
             return assignments;
         }
 
-        // GET: api/Assignments/initial/company
+
+        /// <summary>
+        /// GET: all assignments that belong to a company that have an intitial state
+        /// </summary>
+        /// <param name="id">The company id</param>   
+        /// <returns>The list of initial assignments that belong to the company</returns>
         [Authorize]
         [HttpGet("initial/company/{id}")]
         public async Task<ActionResult<IEnumerable<Assignment>>> GetInitialAssignmentsByCompany(long id)
@@ -55,7 +69,11 @@ namespace code_match_backend.Controllers
             return assignments;
         }
 
-        // GET: api/Assignments/inProgress/company
+        /// <summary>
+        /// GET: all assignments that belong to a company that have an inProgress state
+        /// </summary>
+        /// <param name="id">The company id</param>   
+        /// <returns>The list of inProgress assignments that belong to the company</returns>
         [Authorize]
         [HttpGet("inProgress/company/{id}")]
         public async Task<ActionResult<IEnumerable<Assignment>>> GetInProgressAssignmentsByCompany(long id)
@@ -66,7 +84,11 @@ namespace code_match_backend.Controllers
             return assignments;
         }
 
-        // GET: api/Assignments/completed/company
+        /// <summary>
+        /// GET: all assignments that belong to a company that have a completed state
+        /// </summary>
+        /// <param name="id">The company id</param>   
+        /// <returns>The list of completed assignments that belong to the company</returns>
         [Authorize]
         [HttpGet("completed/company/{id}")]
         public async Task<ActionResult<IEnumerable<Assignment>>> GetCompletedAssignmentsByCompany(long id)
@@ -77,7 +99,11 @@ namespace code_match_backend.Controllers
             return assignments;
         }
 
-        // GET: api/Assignments/maker
+        /// <summary>
+        /// GET: all assignments that a maker is accepted for
+        /// </summary>
+        /// <param name="id">The maker id</param>   
+        /// <returns>The list of assignments that the maker is accepted for</returns>
         [Authorize]
         [HttpGet("maker/{id}")]
         public async Task<ActionResult<IEnumerable<Assignment>>> GetAssignmentsByMaker(long id)
@@ -94,8 +120,11 @@ namespace code_match_backend.Controllers
         }
 
 
-
-        // GET: api/Assignments/inProgress/maker
+        /// <summary>
+        /// GET: all assignments that a maker is accepted for that are inProgress
+        /// </summary>
+        /// <param name="id">The maker id</param>   
+        /// <returns>The list of assignments that the maker is accepted for and are inProgress</returns>
         [Authorize]
         [HttpGet("inProgress/maker/{id}")]
         public async Task<ActionResult<IEnumerable<Assignment>>> GetInProgressAssignmentsByMaker(long id)
@@ -112,7 +141,11 @@ namespace code_match_backend.Controllers
             return lijst;
         }
 
-        // GET: api/Assignments/completed/maker
+        /// <summary>
+        /// GET: all assignments that a maker is accepted for that are completed
+        /// </summary>
+        /// <param name="id">The maker id</param>   
+        /// <returns>The list of assignments that the maker is accepted for and are completed</returns>
         [Authorize]
         [HttpGet("completed/maker/{id}")]
         public async Task<ActionResult<IEnumerable<Assignment>>> GetCompletedAssignmentsByMaker(long id)
@@ -128,7 +161,11 @@ namespace code_match_backend.Controllers
             return lijst;
         }
 
-        // GET: api/Assignments/5
+        /// <summary>
+        /// GET: the assignment that belongs to the given id
+        /// </summary>
+        /// <param name="id">The assignment id</param>   
+        /// <returns>The found assignment</returns>
         [HttpGet("{id}")]
         public async Task<ActionResult<Assignment>> GetAssignment(long id)
         {
@@ -142,7 +179,12 @@ namespace code_match_backend.Controllers
             return assignment;
         }
 
-        // PUT: api/Assignments/5
+        /// <summary>
+        /// PUT: update the assignment with the given assignment ID
+        /// </summary>
+        /// <param name="id">The assignment id</param>   
+        /// <param name="assignment">The to update assignment</param>   
+        /// <returns>null</returns>
         [HttpPut("{id}")]
         public async Task<IActionResult> PutAssignment(long id, Assignment assignment)
         {
@@ -172,7 +214,11 @@ namespace code_match_backend.Controllers
             return NoContent();
         }
 
-        // POST: api/Assignments
+        /// <summary>
+        /// POST: add a new assignment
+        /// </summary>
+        /// <param name="assignment">The new assignment</param>   
+        /// <returns>the new assignment</returns>
         [HttpPost]
         public async Task<ActionResult<Assignment>> PostAssignment(Assignment assignment)
         {
@@ -182,7 +228,11 @@ namespace code_match_backend.Controllers
             return CreatedAtAction("GetAssignment", new { id = assignment.AssignmentID }, assignment);
         }
 
-        // DELETE: api/Assignments/5
+        /// <summary>
+        /// DELETE: delete an assignment
+        /// </summary>
+        /// <param name="id">The to delete assignment</param>   
+        /// <returns>the deleted assignment</returns>
         [HttpDelete("{id}")]
         public async Task<ActionResult<Assignment>> DeleteAssignment(long id)
         {

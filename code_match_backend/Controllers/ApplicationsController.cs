@@ -21,7 +21,10 @@ namespace code_match_backend.Controllers
             _context = context;
         }
 
-        // GET: api/Applications
+        /// <summary>
+        /// GET: all appliactions
+        /// </summary>
+        /// <returns>All assignments</returns>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Application>>> GetApplications()
         {
@@ -31,7 +34,12 @@ namespace code_match_backend.Controllers
                 .ToListAsync();
         }
 
-        // GET: api/Applications/5
+
+        /// <summary>
+        /// GET: the application with the given id
+        /// </summary>
+        /// <param name="id">The id from the to retrieve application</param>   
+        /// <returns>The retrieved application</returns>
         [HttpGet("{id}")]
         public async Task<ActionResult<Application>> GetApplication(long id)
         {
@@ -45,7 +53,13 @@ namespace code_match_backend.Controllers
             return application;
         }
 
-        // PUT: api/Applications/5
+
+        /// <summary>
+        /// PUT: Change the given application that corresponds with the given id
+        /// </summary>
+        /// <param name="id">The id from the to update application</param>   
+        /// <param name="application">The to update application</param>
+        /// <returns>null</returns>
         [HttpPut("{id}")]
         public async Task<IActionResult> PutApplication(long id, Application application)
         {
@@ -75,7 +89,12 @@ namespace code_match_backend.Controllers
             return NoContent();
         }
 
-        // POST: api/Applications
+
+        /// <summary>
+        /// POST: Post a new application
+        /// </summary>  
+        /// <param name="applicationDto">The Dto that carries all the info to create a new application</param>
+        /// <returns>The new application</returns>
         [HttpPost]
         public async Task<ActionResult<Application>> PostApplication(ApplicationDto applicationDto)
         {
@@ -92,7 +111,11 @@ namespace code_match_backend.Controllers
             return CreatedAtAction("GetApplication", new { id = newApplication.ApplicationID }, newApplication);
         }
 
-        // DELETE: api/Applications/5
+        /// <summary>
+        /// Delete: Delete the application with the given id
+        /// </summary>  
+        /// <param name="id">The id of the to delete application</param>
+        /// <returns>The deleted application</returns>
         [HttpDelete("{id}")]
         public async Task<ActionResult<Application>> DeleteApplication(long id)
         {

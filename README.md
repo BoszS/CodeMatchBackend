@@ -31,7 +31,7 @@ In this repository you can find the backend that we made for the application cha
 
  <img alt="Launcher profile" src="img/launchSettings.png">
  
- ## Swagger 
+ ## Swagger documentation
  
 The backend is configured to make use of the Swagger documentation. The Swagger page automatically launches when you start the backend. If you want to take a look at all the controllers and models, you can find the documented at https://localhost:5001/swagger/index.html.
 

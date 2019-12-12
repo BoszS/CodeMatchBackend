@@ -146,6 +146,10 @@ namespace code_match_backend.Controllers
                 return BadRequest();
             }
 
+            var updateUser = await _context.Users.AsNoTracking().SingleOrDefaultAsync(x => x.UserID == id);
+
+            user.Password = updateUser.Password;
+
             _context.Entry(user).State = EntityState.Modified;
 
             try

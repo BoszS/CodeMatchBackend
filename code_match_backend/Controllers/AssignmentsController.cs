@@ -48,7 +48,10 @@ namespace code_match_backend.Controllers
         public async Task<ActionResult<IEnumerable<Assignment>>> GetAssignmentsByCompany(long id)
         {
             var company = await _context.Companies.FindAsync(id);
-            var assignments = await _context.Assignments.Where(m => m.Company == company).Include(a=> a.AssignmentTags).ToListAsync();
+            var assignments = await _context.Assignments.Where(m => m.Company == company).Include(a => a.Company)
+                .Include(a => a.Applications)
+                .Include(a => a.AssignmentTags)
+                .ThenInclude(at => at.Tag).ToListAsync();
 
             return assignments;
         }
@@ -64,7 +67,10 @@ namespace code_match_backend.Controllers
         public async Task<ActionResult<IEnumerable<Assignment>>> GetInitialAssignmentsByCompany(long id)
         {
             var company = await _context.Companies.FindAsync(id);
-            var assignments = await _context.Assignments.Where(m => m.Company == company && m.Status == "Initial").Include(a => a.AssignmentTags).ToListAsync();
+            var assignments = await _context.Assignments.Where(m => m.Company == company && m.Status == "Initial").Include(a => a.Company)
+                .Include(a => a.Applications)
+                .Include(a => a.AssignmentTags)
+                .ThenInclude(at => at.Tag).ToListAsync();
 
             return assignments;
         }
@@ -79,7 +85,10 @@ namespace code_match_backend.Controllers
         public async Task<ActionResult<IEnumerable<Assignment>>> GetInProgressAssignmentsByCompany(long id)
         {
             var company = await _context.Companies.FindAsync(id);
-            var assignments = await _context.Assignments.Where(m => m.Company == company && m.Status == "InProgress").Include(a => a.AssignmentTags).ToListAsync();
+            var assignments = await _context.Assignments.Where(m => m.Company == company && m.Status == "InProgress").Include(a => a.Company)
+                .Include(a => a.Applications)
+                .Include(a => a.AssignmentTags)
+                .ThenInclude(at => at.Tag).ToListAsync();
 
             return assignments;
         }
@@ -94,7 +103,10 @@ namespace code_match_backend.Controllers
         public async Task<ActionResult<IEnumerable<Assignment>>> GetCompletedAssignmentsByCompany(long id)
         {
             var company = await _context.Companies.FindAsync(id);
-            var assignments = await _context.Assignments.Where(m => m.Company == company && m.Status == "Completed").Include(a => a.AssignmentTags).ToListAsync();      
+            var assignments = await _context.Assignments.Where(m => m.Company == company && m.Status == "Completed").Include(a => a.Company)
+                .Include(a => a.Applications)
+                .Include(a => a.AssignmentTags)
+                .ThenInclude(at => at.Tag).ToListAsync();      
 
             return assignments;
         }
@@ -109,13 +121,17 @@ namespace code_match_backend.Controllers
         public async Task<ActionResult<IEnumerable<Assignment>>> GetAssignmentsByMaker(long id)
         {
             var maker = await _context.Makers.FindAsync(id);
-            var applications = await _context.Applications.Where(m => m.Maker == maker && m.IsAccepted == true).Include(a => a.Assignment).ThenInclude(a => a.AssignmentTags).ToListAsync();
+            var applications = await _context.Applications.Where(m => m.Maker == maker && m.IsAccepted == true).Include(a => a.Assignment).ThenInclude(a => a.Company)
+                .Include(a => a.Assignment).ThenInclude(a => a.Applications)
+                .Include(a => a.Assignment).ThenInclude(a => a.AssignmentTags)
+                .ThenInclude(a => a.Tag)
+                .ToListAsync();
             var lijst = new List<Assignment>();
             foreach(var app in applications)
             {
                 lijst.Add(app.Assignment);
             }
-
+            
             return lijst;
         }
 
@@ -131,7 +147,10 @@ namespace code_match_backend.Controllers
         {
 
             var maker = await _context.Makers.FindAsync(id);
-            var applications = await _context.Applications.Where(m => m.Maker == maker && m.IsAccepted == true).Include(a => a.Assignment).ThenInclude(a => a.AssignmentTags).Where(a => a.Assignment.Status=="InProgress").ToListAsync();
+            var applications = await _context.Applications.Where(m => m.Maker == maker && m.IsAccepted == true).Include(a => a.Assignment).ThenInclude(a => a.Company)
+                .Include(a => a.Assignment).ThenInclude(a => a.Applications)
+                .Include(a => a.Assignment).ThenInclude(a => a.AssignmentTags)
+                .ThenInclude(a => a.Tag).Where(a => a.Assignment.Status=="InProgress").ToListAsync();
             var lijst = new List<Assignment>();
             foreach (var app in applications)
             {
@@ -151,7 +170,10 @@ namespace code_match_backend.Controllers
         public async Task<ActionResult<IEnumerable<Assignment>>> GetCompletedAssignmentsByMaker(long id)
         {
             var maker = await _context.Makers.FindAsync(id);
-            var applications = await _context.Applications.Where(m => m.Maker == maker && m.IsAccepted == true).Include(a => a.Assignment).ThenInclude(a => a.AssignmentTags).Where(a => a.Assignment.Status == "Completed").ToListAsync();
+            var applications = await _context.Applications.Where(m => m.Maker == maker && m.IsAccepted == true).Include(a => a.Assignment).ThenInclude(a => a.Company)
+                .Include(a => a.Assignment).ThenInclude(a => a.Applications)
+                .Include(a => a.Assignment).ThenInclude(a => a.AssignmentTags)
+                .ThenInclude(a => a.Tag).Where(a => a.Assignment.Status == "Completed").ToListAsync();
             var lijst = new List<Assignment>();
             foreach (var app in applications)
             {

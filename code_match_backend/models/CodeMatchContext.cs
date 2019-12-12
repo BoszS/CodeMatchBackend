@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using code_match_backend.models;
 
 namespace code_match_backend.models
 {
@@ -54,5 +55,6 @@ namespace code_match_backend.models
                 .HasForeignKey(e => e.UserIDReceiver)
                 .OnDelete(DeleteBehavior.Restrict);
         }
+        public DbSet<code_match_backend.models.Notification> Notification { get; set; }
     }
 }

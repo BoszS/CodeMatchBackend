@@ -221,10 +221,23 @@ namespace code_match_backend.models
 
             context.Applications.AddRange(new Application
             {
-                IsAccepted = true,
-                Assignment = context.Assignments.FirstOrDefault(),
+                IsAccepted = false,
+                Assignment = context.Assignments.Where(r => r.Name == "Het bakkerij datamodel").Single(),
                 Maker = context.Makers.FirstOrDefault()
-            });
+            },
+            new Application
+            {
+                IsAccepted = true,
+                Assignment = context.Assignments.Where(r => r.Name == "Het bakkerij datamodel").Single(),
+                Maker = context.Makers.FirstOrDefault()
+            },
+            new Application
+            {
+                IsAccepted = true,
+                Assignment = context.Assignments.Where(r => r.Name == "De online bakkerij database").Single(),
+                Maker = context.Makers.FirstOrDefault()
+            }
+            );
 
             context.SaveChanges();
 
@@ -307,6 +320,15 @@ namespace code_match_backend.models
                 Company = context.Companies.FirstOrDefault(),
                 Tag = context.Tags.Single(r => r.Name == "back")
             });
+            context.SaveChanges();
+
+            context.Notification.AddRange(
+                new Notification
+                {
+                    Sender = context.Users.FirstOrDefault(),
+                    Receiver = context.Users.Single(u => u.Email == "company@test.com"),
+                    ApplicationID = 1
+                });
             context.SaveChanges();
         }
     }

@@ -24,7 +24,7 @@ namespace code_match_backend.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Application>>> GetApplications()
         {
-            return await _context.Applications.ToListAsync();
+            return await _context.Applications.Include(a => a.Maker).ToListAsync();
         }
 
         // GET: api/Applications/5

@@ -44,6 +44,14 @@ namespace code_match_backend.models
             new Permission
             {
                 Name = "update_company_profile"
+            },
+            new Permission
+            {
+                Name = "read_maker_profile"
+            },
+            new Permission
+            {
+                Name = "read_company_profile"
             }
             );
             context.SaveChanges();
@@ -98,7 +106,17 @@ namespace code_match_backend.models
             new RolePermission
             {
                 Permission = context.Permissions.SingleOrDefault(p => p.PermissionID == 7),
+                Role = context.Roles.SingleOrDefault(r => r.RoleID == 2)
+            },
+            new RolePermission
+            {
+                Permission = context.Permissions.SingleOrDefault(p => p.PermissionID == 8),
                 Role = context.Roles.FirstOrDefault()
+            },
+            new RolePermission
+            {
+                Permission = context.Permissions.SingleOrDefault(p => p.PermissionID == 9),
+                Role = context.Roles.SingleOrDefault(r => r.RoleID == 2)
             }
             );
 

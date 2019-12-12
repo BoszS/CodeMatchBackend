@@ -73,9 +73,9 @@ namespace code_match_backend.Controllers
             return user;
         }
 
-
-        [HttpGet("user/info/{id}")]
-        public async Task<ActionResult<User>> GetUserWithType(long? id)
+        // GET: api/Users/User/Info
+        [HttpGet("User/Info/{id}")]
+        public async Task<ActionResult<User>> GetUserWithTypeAndPermissions(long? id)
         {
             if (id == null)
             {
@@ -94,6 +94,9 @@ namespace code_match_backend.Controllers
 
                 var userWithType = await _context.Users
                     .Include(x => x.Company)
+                    .Include(x => x.Role)
+                        .ThenInclude(x => x.RolePermissions)
+                            .ThenInclude(x => x.Permission)
                     .FirstOrDefaultAsync(x => x.CompanyID == user.CompanyID);
 
                 userWithType.Password = null;
@@ -105,6 +108,9 @@ namespace code_match_backend.Controllers
             {
                 var userWithType = await _context.Users
                     .Include(x => x.Maker)
+                    .Include(x => x.Role)
+                        .ThenInclude(x => x.RolePermissions)
+                            .ThenInclude(x => x.Permission)
                     .FirstOrDefaultAsync(x => x.MakerID == user.MakerID);
 
                 userWithType.Password = null;

@@ -19,7 +19,7 @@ namespace code_match_backend.models
             context.Permissions.AddRange(
             new Permission
             {
-                Name = "MakerSearchApplyAssignemnt"
+                Name = "MakerSearchApplyAssignment"
             },
             new Permission
             {
@@ -36,6 +36,14 @@ namespace code_match_backend.models
             new Permission
             {
                 Name = "AdminCRUDAssignments"
+            },
+            new Permission
+            {
+                Name = "update_maker_profile"
+            },
+            new Permission
+            {
+                Name = "update_company_profile"
             }
             );
             context.SaveChanges();
@@ -81,6 +89,16 @@ namespace code_match_backend.models
             {
                 Permission = context.Permissions.SingleOrDefault(p => p.PermissionID == 5),
                 Role = context.Roles.SingleOrDefault(r => r.RoleID == 3)
+            },
+            new RolePermission
+            {
+                Permission = context.Permissions.SingleOrDefault(p => p.PermissionID == 6),
+                Role = context.Roles.FirstOrDefault()
+            },
+            new RolePermission
+            {
+                Permission = context.Permissions.SingleOrDefault(p => p.PermissionID == 7),
+                Role = context.Roles.FirstOrDefault()
             }
             );
 
@@ -90,7 +108,14 @@ namespace code_match_backend.models
             {
                 StreetAdress = "Schoolstraat",
                 PostalCode = 2260
-            });
+            },
+            new Company
+            {
+                StreetAdress = "Biezenveld 34",
+                PostalCode = 2460,
+                Name = "Geko bvba"
+            }
+            );
 
             context.SaveChanges();
 
@@ -148,6 +173,15 @@ namespace code_match_backend.models
                 Phonenumber = "0483476363",
                 Role = context.Roles.FirstOrDefault(),
                 MakerID = 2
+            },
+            new User
+            {
+                Biography = "Plastic bedrijf",
+                Email = "plastic@live.com",
+                Password = "plastic",
+                Phonenumber = "0483473626",
+                Role = context.Roles.SingleOrDefault(r => r.RoleID == 2),
+                CompanyID = 2
             }
             );
 

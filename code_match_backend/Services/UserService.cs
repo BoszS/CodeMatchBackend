@@ -10,6 +10,7 @@ using code_match_backend.models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
 
 namespace code_match_backend.Services
 {
@@ -28,6 +29,7 @@ namespace code_match_backend.Services
             var user = _codeMatchContext.Users
                 .Include(u => u.Role)
                 .SingleOrDefault(x => x.Email == email && x.Password == password);
+
             
             // return null if user not found
             if (user == null)

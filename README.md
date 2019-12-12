@@ -8,7 +8,7 @@ A couple examples would be: Designs, Websites, Applications, Data modeling, …
 
 ## Team: CodeMatchers (Athene)
 
-This assignment wasn’t made for one student to complete, but for a team of students. Our team the “CodeMatchers” consists of 4 students. Toghetter we build our application "MatchIT".
+This assignment wasn’t made for one student to complete, but for a team of students. Our team the “CodeMatchers” consists of 4 students. together we build our application "MatchIT".
   * Bosz Srisan (BoszS)
   * Brecht Snoeck (BrechtSnoeck)
   * Maarten Schroons (maartenschroons)

@@ -27,6 +27,46 @@ namespace code_match_backend.Controllers
             return await _context.Notification.ToListAsync();
         }
 
+        // GET: api/Notifications/receiver
+        [HttpGet("receiver/{id}")]
+        public async Task<ActionResult<IEnumerable<Notification>>> GetNotificationsByReceiver(long id)
+        {
+            User user = await _context.Users.FindAsync(id);
+            return await _context.Notification.Where(n => n.Receiver == user && n.Read == false).Include(n => n.Receiver).ToListAsync();
+        }
+
+        // GET: api/Notifications
+        [HttpGet("receiver/Review/{id}")]
+        public async Task<ActionResult<IEnumerable<Notification>>> GetReviewNotificationsByReceiver(long id)
+        {
+            User user = await _context.Users.FindAsync(id);
+            return await _context.Notification.Where(n => n.Receiver == user && n.Read == false && n.ReviewID != null).Include(n => n.Sender).Include(n=> n.Review).ToListAsync();
+        }
+
+        // GET: api/Notifications
+        [HttpGet("receiver/Application/{id}")]
+        public async Task<ActionResult<IEnumerable<Notification>>> GetApplicationNotificationsByReceiver(long id)
+        {
+            User user = await _context.Users.FindAsync(id);
+            return await _context.Notification.Where(n => n.Receiver == user && n.Read == false && n.ApplicationID != null).Include(n => n.Receiver).Include(n => n.Application).ToListAsync();
+        }
+
+        // GET: api/Notifications
+        [HttpGet("receiver/Assignment/{id}")]
+        public async Task<ActionResult<IEnumerable<Notification>>> GetAssignmentNotificationsByReceiver(long id)
+        {
+            User user = await _context.Users.FindAsync(id);
+            return await _context.Notification.Where(n => n.Receiver == user && n.Read == false && n.AssignmentID!=null).Include(n => n.Receiver).Include(n => n.Assignment).ToListAsync();
+        }
+
+        // GET: api/Notifications
+        [HttpGet("sender/Application/{id}")]
+        public async Task<ActionResult<IEnumerable<Notification>>> GetApplicationNotificationsBySender(long id)
+        {
+            User user = await _context.Users.FindAsync(id);
+            return await _context.Notification.Where(n => n.Sender == user && n.Read == false && n.ApplicationID != null).Include(n => n.Receiver).Include(n => n.Application).ToListAsync();
+        }
+
         // GET: api/Notifications/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Notification>> GetNotification(long id)

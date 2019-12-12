@@ -38,3 +38,8 @@ The backend is configured to make use of the Swagger documentation. The Swagger 
 ### Controlers and methods
 Below you can see an image of the swagger page. It contains the controllers and models of the backend.
  <img alt="Launcher profile" src="img/swagger.png">
+ 
+ ## Frontend
+ 
+ Want to have a look at what the frontend looks like? Just click on the following link!
+ https://github.com/maartenschroons/CodeMatchFrontend

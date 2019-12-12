@@ -107,15 +107,17 @@ namespace code_match_backend.models
             context.Companies.AddRange(new Company
             {
                 StreetAdress = "Schoolstraat",
-                PostalCode = 2260
+                PostalCode = 2260,
+                Name = "Kwb Heultje"
+
             },
             new Company
             {
                 StreetAdress = "Biezenveld 34",
                 PostalCode = 2460,
                 Name = "Geko bvba"
-            }
-            );
+            });
+
 
             context.SaveChanges();
 
@@ -214,17 +216,32 @@ namespace code_match_backend.models
                 Company = context.Companies.FirstOrDefault(),
                 Description = "Backend .NET",
                 Name = "De online bakkerij database"
+            },
+            new Assignment
+            {
+                Status = "Initial",
+                StreetAdress = "Schoolstraat",
+                PostalCode = 2260,
+                Company = context.Companies.FirstOrDefault(),
+                Description = "Hallo, ik ben slager Jan. Ik ben op zoek naar iemand die voor mijn prestigieuze slagerij een website kan maken! Ik ben op zoek naar een vriendelijke student/freelancer" +
+                "die me hierbij kan helpen",
+                Name = "De slager website"
+            },
+            new Assignment
+            {
+                Status = "Initial",
+                StreetAdress = "Schoolstraat",
+                PostalCode = 2260,
+                Company = context.Companies.FirstOrDefault(),
+                Description = "Hallo, ik ben directeur Bart. Ik ben op zoek naar iemand die voor mijn prestigieuze school een website kan maken! Ik ben op zoek naar een vriendelijke student/freelancer" +
+                "die me hierbij kan helpen",
+                Name = "De school website"
             }
             );
 
             context.SaveChanges();
 
-            context.Applications.AddRange(new Application
-            {
-                IsAccepted = false,
-                Assignment = context.Assignments.Where(r => r.Name == "Het bakkerij datamodel").Single(),
-                Maker = context.Makers.FirstOrDefault()
-            },
+            context.Applications.AddRange(
             new Application
             {
                 IsAccepted = true,
@@ -253,11 +270,11 @@ namespace code_match_backend.models
 
             context.Tags.AddRange(new Tag
             {
-                Name = "front"
+                Name = "Front-end"
             },
             new Tag
             {
-                Name = "back"
+                Name = "Back-end"
             },
             new Tag
             {
@@ -302,6 +319,14 @@ namespace code_match_backend.models
             new Tag
             {
                 Name = "CSS"
+            },
+            new Tag
+            {
+                Name = "Sql"
+            },
+            new Tag
+            {
+                Name = ".NET"
             }
             );
 
@@ -310,7 +335,7 @@ namespace code_match_backend.models
             context.MakerTags.AddRange(new MakerTag
             {
                 Maker = context.Makers.FirstOrDefault(),
-                Tag = context.Tags.Single(r => r.Name == "front")
+                Tag = context.Tags.Single(r => r.Name == "Front-end")
             });
 
             context.SaveChanges();
@@ -318,15 +343,17 @@ namespace code_match_backend.models
             context.CompanyTags.AddRange(new CompanyTag
             {
                 Company = context.Companies.FirstOrDefault(),
-                Tag = context.Tags.Single(r => r.Name == "back")
+                Tag = context.Tags.Single(r => r.Name == "Back-end")
             });
             context.SaveChanges();
+
 
             context.Notification.AddRange(
                 new Notification
                 {
                     Sender = context.Users.FirstOrDefault(),
                     Receiver = context.Users.Single(u => u.Email == "company@test.com"),
+<<<<<<< HEAD
                     ApplicationID = 1,
                     Read = false
                 },
@@ -352,6 +379,68 @@ namespace code_match_backend.models
                     Read = false
                 }
                 );
+=======
+                    ApplicationID = 1
+                });
+
+            context.AssignmentTags.AddRange(
+            new AssignmentTag
+            {
+                Assignment = context.Assignments.FirstOrDefault(),
+                Tag = context.Tags.Single(r => r.Name == "HTML")
+            },
+            new AssignmentTag
+            {
+                Assignment = context.Assignments.FirstOrDefault(),
+                Tag = context.Tags.Single(r => r.Name == "CSS")
+            },
+            new AssignmentTag
+            {
+                Assignment = context.Assignments.FirstOrDefault(),
+                Tag = context.Tags.Single(r => r.Name == "Design")
+            },
+            new AssignmentTag
+            {
+                Assignment = context.Assignments.SingleOrDefault(a => a.AssignmentID == 2),
+                Tag = context.Tags.Single(r => r.Name == "Sql")
+            },
+            new AssignmentTag
+            {
+                Assignment = context.Assignments.SingleOrDefault(a => a.AssignmentID == 2),
+                Tag = context.Tags.Single(r => r.Name == "Datamodeling")
+            },
+            new AssignmentTag
+            {
+                Assignment = context.Assignments.SingleOrDefault(a => a.AssignmentID == 2),
+                Tag = context.Tags.Single(r => r.Name == "Back-end")
+            },
+            new AssignmentTag
+            {
+                Assignment = context.Assignments.SingleOrDefault(a => a.AssignmentID == 3),
+                Tag = context.Tags.Single(r => r.Name == ".NET")
+            },
+            new AssignmentTag
+            {
+                Assignment = context.Assignments.SingleOrDefault(a => a.AssignmentID == 4),
+                Tag = context.Tags.Single(r => r.Name == "CSS")
+            },
+            new AssignmentTag
+            {
+                Assignment = context.Assignments.SingleOrDefault(a => a.AssignmentID == 4),
+                Tag = context.Tags.Single(r => r.Name == "Design")
+            },
+            new AssignmentTag
+            {
+                Assignment = context.Assignments.SingleOrDefault(a => a.AssignmentID == 5),
+                Tag = context.Tags.Single(r => r.Name == "Design")
+            },
+            new AssignmentTag
+            {
+                Assignment = context.Assignments.SingleOrDefault(a => a.AssignmentID == 5),
+                Tag = context.Tags.Single(r => r.Name == "CSS")
+            }
+            );
+>>>>>>> Assignments deel aangevuld
             context.SaveChanges();
         }
     }

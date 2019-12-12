@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using code_match_backend.models;
+using code_match_backend.models.Dto;
 
 namespace code_match_backend.Controllers
 {
@@ -24,7 +25,10 @@ namespace code_match_backend.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Application>>> GetApplications()
         {
-            return await _context.Applications.Include(a => a.Maker).ToListAsync();
+
+            return await _context.Applications
+                .Include(a => a.Maker)
+                .ToListAsync();
         }
 
         // GET: api/Applications/5
@@ -73,12 +77,19 @@ namespace code_match_backend.Controllers
 
         // POST: api/Applications
         [HttpPost]
-        public async Task<ActionResult<Application>> PostApplication(Application application)
+        public async Task<ActionResult<Application>> PostApplication(ApplicationDto applicationDto)
         {
-            _context.Applications.Add(application);
+            Application newApplication = new Application
+            {
+                AssignmentID = applicationDto.Assignment.AssignmentID,
+                IsAccepted = applicationDto.IsAccepted,
+                MakerID = applicationDto.MakerID
+            };
+
+            _context.Applications.Add(newApplication);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetApplication", new { id = application.ApplicationID }, application);
+            return CreatedAtAction("GetApplication", new { id = newApplication.ApplicationID }, newApplication);
         }
 
         // DELETE: api/Applications/5

@@ -25,7 +25,12 @@ namespace code_match_backend.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Assignment>>> GetAssignments()
         {
-            return await _context.Assignments.ToListAsync();
+            return await _context.Assignments
+                .Include(a => a.Company)
+                .Include(a => a.Applications)
+                .Include(a => a.AssignmentTags)
+                .ThenInclude(at => at.Tag)
+                .ToListAsync();
         }
 
         // GET: api/Assignments/company

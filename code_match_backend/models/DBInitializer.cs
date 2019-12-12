@@ -353,7 +353,6 @@ namespace code_match_backend.models
                 {
                     Sender = context.Users.FirstOrDefault(),
                     Receiver = context.Users.Single(u => u.Email == "company@test.com"),
-<<<<<<< HEAD
                     ApplicationID = 1,
                     Read = false
                 },
@@ -379,9 +378,7 @@ namespace code_match_backend.models
                     Read = false
                 }
                 );
-=======
-                    ApplicationID = 1
-                });
+            context.SaveChanges();
 
             context.AssignmentTags.AddRange(
             new AssignmentTag
@@ -440,7 +437,6 @@ namespace code_match_backend.models
                 Tag = context.Tags.Single(r => r.Name == "CSS")
             }
             );
->>>>>>> Assignments deel aangevuld
             context.SaveChanges();
         }
     }

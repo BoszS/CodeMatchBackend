@@ -16,6 +16,7 @@ namespace code_match_backend.models
         public Review Review { get; set; }
         public long? ApplicationID { get; set; }
         public Application Application { get; set; }
+        public bool Read { get; set; }
 
     }
 }

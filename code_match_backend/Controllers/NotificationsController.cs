@@ -64,7 +64,7 @@ namespace code_match_backend.Controllers
         {
             User user = await _context.Users.FindAsync(id);
             return await _context.Notification.Where(n => n.Receiver == user && n.Read == false && n.ApplicationID != null)
-                .Include(n => n.Sender)
+                .Include(n => n.Sender).ThenInclude(a => a.Company)
                 .Include(n => n.Application).ThenInclude(a => a.Assignment)
                 .Include(n => n.Application).ThenInclude(a => a.Maker).ToListAsync();
         }
@@ -75,11 +75,21 @@ namespace code_match_backend.Controllers
         {
             User user = await _context.Users.FindAsync(id);
             return await _context.Notification.Where(n => n.Receiver == user && n.Read == true && n.ApplicationID != null)
-                .Include(n => n.Sender)
+                .Include(n => n.Sender).ThenInclude(a => a.Company)
                 .Include(n => n.Application).ThenInclude(a => a.Assignment)
                 .Include(n => n.Application).ThenInclude(a => a.Maker).ToListAsync();
         }
 
+        // GET: api/Notifications
+        [HttpGet("company/Application/read/{id}")]
+        public async Task<ActionResult<IEnumerable<Notification>>> GetReadApplicationNotificationsByCompany(long id)
+        {
+            User user = await _context.Users.FindAsync(id);
+            return await _context.Notification.Where(n => n.Receiver == user && n.Read == true && n.ApplicationID != null && n.Application.IsAccepted==true && n.Application.Assignment.Status=="InProgress")
+                .Include(n => n.Sender).ThenInclude(a => a.Company)
+                .Include(n => n.Application).ThenInclude(a => a.Assignment)
+                .Include(n => n.Application).ThenInclude(a => a.Maker).ToListAsync();
+        }
         // GET: api/Notifications
         [HttpGet("receiver/Assignment/{id}")]
         public async Task<ActionResult<IEnumerable<Notification>>> GetAssignmentNotificationsByReceiver(long id)

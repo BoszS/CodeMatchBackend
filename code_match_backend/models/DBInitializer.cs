@@ -147,6 +147,7 @@ namespace code_match_backend.models
                 Firstname = "te",
                 Lastname = "st",
                 LinkedIn = "www.link.com",
+                Nickname= "Test"
             },
             new Maker
             {

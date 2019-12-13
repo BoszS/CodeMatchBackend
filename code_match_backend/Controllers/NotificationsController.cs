@@ -131,7 +131,7 @@ namespace code_match_backend.Controllers
                 Sender = notification.Sender,
                 Receiver = notification.Receiver,
                 Read = false,
-                //AssignmentID = notification.AssignmentID,
+                AssignmentID = notification.AssignmentID,
                 ReviewID = notification.ReviewID,
                 ApplicationID = notification.ApplicationID
             };

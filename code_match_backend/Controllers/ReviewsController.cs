@@ -27,6 +27,20 @@ namespace code_match_backend.Controllers
             return await _context.Reviews.ToListAsync();
         }
 
+        // GET: api/Reviews/sender/5
+        [HttpGet("sender/{id}")]
+        public async Task<ActionResult<IEnumerable<Review>>> GetReviewsBySender(long id)
+        {
+            return await _context.Reviews.Where(r => r.UserIDSender == id).Include(r => r.Receiver).ToListAsync();
+        }
+
+        // GET: api/Reviews/receiver/5
+        [HttpGet("receiver/{id}")]
+        public async Task<ActionResult<IEnumerable<Review>>> GetReviewsByReceiver(long id)
+        {
+            return await _context.Reviews.Where(r => r.UserIDReceiver == id).Include(r => r.Sender).ToListAsync();
+        }
+
         // GET: api/Reviews/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Review>> GetReview(long id)

@@ -14,5 +14,7 @@ namespace code_match_backend.models
         public User Sender { get; set; }
         public long UserIDReceiver { get; set; }
         public User Receiver { get; set; }
+
+
     }
 }

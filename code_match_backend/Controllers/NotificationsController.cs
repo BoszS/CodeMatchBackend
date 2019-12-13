@@ -48,6 +48,17 @@ namespace code_match_backend.Controllers
         }
 
         // GET: api/Notifications
+        [HttpGet("receiver/Review/read/{id}")]
+        public async Task<ActionResult<IEnumerable<Notification>>> GetReadReviewNotificationsByReceiver(long id)
+        {
+            User user = await _context.Users.FindAsync(id);
+            return await _context.Notification.Where(n => n.Receiver == user && n.Read == true && n.ReviewID != null)
+                .Include(n => n.Sender)
+                .Include(n => n.Review).ThenInclude(r => r.Sender)
+                .Include(n => n.Review).ThenInclude(r => r.Assignment).ToListAsync();
+        }
+
+        // GET: api/Notifications
         [HttpGet("receiver/Application/{id}")]
         public async Task<ActionResult<IEnumerable<Notification>>> GetApplicationNotificationsByReceiver(long id)
         {
@@ -59,11 +70,32 @@ namespace code_match_backend.Controllers
         }
 
         // GET: api/Notifications
+        [HttpGet("receiver/Application/read/{id}")]
+        public async Task<ActionResult<IEnumerable<Notification>>> GetReadApplicationNotificationsByReceiver(long id)
+        {
+            User user = await _context.Users.FindAsync(id);
+            return await _context.Notification.Where(n => n.Receiver == user && n.Read == true && n.ApplicationID != null)
+                .Include(n => n.Sender)
+                .Include(n => n.Application).ThenInclude(a => a.Assignment)
+                .Include(n => n.Application).ThenInclude(a => a.Maker).ToListAsync();
+        }
+
+        // GET: api/Notifications
         [HttpGet("receiver/Assignment/{id}")]
         public async Task<ActionResult<IEnumerable<Notification>>> GetAssignmentNotificationsByReceiver(long id)
         {
             User user = await _context.Users.FindAsync(id);
-            return await _context.Notification.Where(n => n.Receiver == user && n.Read == false && n.AssignmentID!=null)
+            return await _context.Notification.Where(n => n.Receiver == user && n.Read == false && n.AssignmentID != null)
+                .Include(n => n.Sender)
+                .Include(n => n.Assignment).ToListAsync();
+        }
+
+        // GET: api/Notifications
+        [HttpGet("receiver/Assignment/read/{id}")]
+        public async Task<ActionResult<IEnumerable<Notification>>> GetReadAssignmentNotificationsByReceiver(long id)
+        {
+            User user = await _context.Users.FindAsync(id);
+            return await _context.Notification.Where(n => n.Receiver == user && n.Read == true && n.AssignmentID != null)
                 .Include(n => n.Sender)
                 .Include(n => n.Assignment).ToListAsync();
         }
@@ -126,15 +158,38 @@ namespace code_match_backend.Controllers
         [HttpPost]
         public async Task<ActionResult<Notification>> PostNotification(NotificationDto notification)
         {
-            Notification newNotification = new Notification
+            Notification newNotification;
+            if (notification.AssignmentID!=0) {
+                newNotification = new Notification
+                {
+                    SenderID = notification.SenderID,
+                    ReceiverID = notification.ReceiverID,
+                    Read = false,
+                    AssignmentID = notification.AssignmentID
+                };
+            }
+            else if (notification.ReviewID != 0)
             {
-                Sender = notification.Sender,
-                Receiver = notification.Receiver,
-                Read = false,
-                AssignmentID = notification.AssignmentID,
-                ReviewID = notification.ReviewID,
-                ApplicationID = notification.ApplicationID
-            };
+                newNotification = new Notification
+                {
+                    SenderID = notification.SenderID,
+                    ReceiverID = notification.ReceiverID,
+                    Read = false,                
+                    ReviewID = notification.ReviewID
+                };
+            }
+            else
+            {
+                newNotification = new Notification
+                {
+                    SenderID = notification.SenderID,
+                    ReceiverID = notification.ReceiverID,
+                    Read = false,                    
+                    ApplicationID = notification.ApplicationID
+                };
+            }
+
+
 
             _context.Notification.Add(newNotification);
             await _context.SaveChangesAsync();

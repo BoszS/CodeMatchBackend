@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using code_match_backend.models;
+using code_match_backend.models.Dto;
 
 namespace code_match_backend.Controllers
 {
@@ -123,12 +124,22 @@ namespace code_match_backend.Controllers
 
         // POST: api/Notifications
         [HttpPost]
-        public async Task<ActionResult<Notification>> PostNotification(Notification notification)
+        public async Task<ActionResult<Notification>> PostNotification(NotificationDto notification)
         {
-            _context.Notification.Add(notification);
+            Notification newNotification = new Notification
+            {
+                Sender = notification.Sender,
+                Receiver = notification.Receiver,
+                Read = false,
+                //AssignmentID = notification.AssignmentID,
+                ReviewID = notification.ReviewID,
+                ApplicationID = notification.ApplicationID
+            };
+
+            _context.Notification.Add(newNotification);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetNotification", new { id = notification.NotificationID }, notification);
+            return CreatedAtAction("GetNotification", new { id = newNotification.NotificationID }, newNotification);
         }
 
         // DELETE: api/Notifications/5

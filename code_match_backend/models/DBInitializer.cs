@@ -376,6 +376,34 @@ namespace code_match_backend.models
                 },
                 new Notification
                 {
+                    Sender = context.Users.FirstOrDefault(),
+                    Receiver = context.Users.Single(u => u.Email == "company@test.com"),
+                    ApplicationID = 1,
+                    Read = false
+                },
+                new Notification
+                {
+                    Sender = context.Users.FirstOrDefault(),
+                    Receiver = context.Users.Single(u => u.Email == "company@test.com"),
+                    ApplicationID = 1,
+                    Read = false
+                },
+                new Notification
+                {
+                    Sender = context.Users.FirstOrDefault(),
+                    Receiver = context.Users.Single(u => u.Email == "company@test.com"),
+                    ApplicationID = 1,
+                    Read = false
+                },
+                new Notification
+                {
+                    Sender = context.Users.FirstOrDefault(),
+                    Receiver = context.Users.Single(u => u.Email == "company@test.com"),
+                    ApplicationID = 1,
+                    Read = false
+                },
+                new Notification
+                {
                     Sender = context.Users.Single(u => u.Email == "company@test.com"),
                     Receiver = context.Users.FirstOrDefault(),
                     ApplicationID = 1,

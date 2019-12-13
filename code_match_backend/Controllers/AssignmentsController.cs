@@ -25,19 +25,35 @@ namespace code_match_backend.Controllers
         /// <summary>
         /// GET: all assignments
         /// </summary>  
-        /// <returns>A list of all applications</returns>
+        /// <returns>A list of all assignments</returns>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Assignment>>> GetAssignments()
         {
             return await _context.Assignments
                 .Include(a => a.Company)
                 .Include(a => a.Applications)
+                .ThenInclude(ap => ap.Maker)
                 .Include(a => a.AssignmentTags)
                 .ThenInclude(at => at.Tag)
                 .ToListAsync();
         }
 
-
+        /// <summary>
+        /// GET: all assignments where the status is initial
+        /// </summary>  
+        /// <returns>A list of all applications where the status is initial</returns>
+        [Authorize]
+        [HttpGet("assignmentInitial")]
+        public async Task<ActionResult<IEnumerable<Assignment>>> GetInitialAssignments()
+        {
+            return await _context.Assignments
+                .Include(a => a.Company)
+                .Include(a => a.Applications)
+                .Include(a => a.AssignmentTags)
+                .ThenInclude(at => at.Tag)
+                .Where(a => a.Status.Equals("Initial"))
+                .ToListAsync();
+        }
         /// <summary>
         /// GET: all assignments that belong to a company
         /// </summary>

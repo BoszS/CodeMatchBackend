@@ -106,10 +106,10 @@ namespace code_match_backend.models
             {
                 Dob = new DateTime(1998, 3, 12),
                 Experience = "none",
-                Firstname = "te",
-                Lastname = "st",
-                LinkedIn = "www.link.com",
-                Nickname = "Test"
+                Firstname = "Brecht",
+                Lastname = "Snoeck",
+                LinkedIn = "www.linkedIn/BrechtSnoeck",
+                Nickname = "Brekke"
             },
             new Maker
             {
@@ -253,6 +253,12 @@ namespace code_match_backend.models
                 IsAccepted = true,
                 Assignment = context.Assignments.Where(r => r.Name == "De bakkerij website").Single(),
                 Maker = context.Makers.FirstOrDefault()
+            },
+            new Application
+            {
+                IsAccepted = true,
+                Assignment = context.Assignments.Where(r => r.Name == "Het bakkerij datamodel").Single(),
+                Maker = context.Makers.SingleOrDefault(m => m.MakerID == 2)
             },
             new Application
             {

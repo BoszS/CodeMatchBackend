@@ -34,7 +34,6 @@ namespace code_match_backend.Controllers
                 .ToListAsync();
         }
 
-
         /// <summary>
         /// GET: the application with the given id
         /// </summary>

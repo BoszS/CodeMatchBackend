@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using code_match_backend.models;
+using Microsoft.AspNetCore.Authorization;
+using code_match_backend.models.Dto;
 
 namespace code_match_backend.Controllers
 {
@@ -47,6 +49,35 @@ namespace code_match_backend.Controllers
         {
             var review = await _context.Reviews.FindAsync(id);
 
+            if (review == null)
+            {
+                return NotFound();
+            }
+
+            return review;
+        }
+
+        /// <summary>
+        /// GET: The review with the given values in the Dto
+        /// </summary>
+        /// <param name="dto">The dto containing the SenderId, ReceiverId and assignmentId, respectevly</param>   
+        /// <returns>The review belonging to the given values in the dto</returns>
+        [Authorize]
+        [HttpGet("review/{dto}")]
+        public async Task<ActionResult<Review>> GetAssignmentsByCompany(ReviewDto dto)
+        {
+            var review = new Review();
+            if (dto.AssignmentID !=0)
+            {
+                review = await _context.Reviews
+                    .Where(r => r.UserIDSender == dto.SenderID && r.AssignmentID == dto.AssignmentID).SingleOrDefaultAsync();
+            }
+
+            if (dto.ReceiverID != 0)
+            {
+                review = await _context.Reviews
+                    .Where(r => r.UserIDSender == dto.SenderID && r.UserIDReceiver == dto.ReceiverID).SingleOrDefaultAsync();
+            }
             if (review == null)
             {
                 return NotFound();

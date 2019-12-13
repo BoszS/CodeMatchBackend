@@ -107,7 +107,8 @@ namespace code_match_backend.Controllers
             if (user.MakerID != null)
             {
                 var userWithType = await _context.Users
-                    .Include(x => x.Maker)
+                    .Include(x => x.Maker).ThenInclude(m => m.Applications).ThenInclude(a => a.Assignment).ThenInclude(a => a.Company)
+                    .Include(x => x.Maker).ThenInclude(m => m.Applications).ThenInclude(a => a.Assignment).ThenInclude(a => a.Applications).ThenInclude(a => a.Maker)
                     .Include(x => x.Role)
                         .ThenInclude(x => x.RolePermissions)
                             .ThenInclude(x => x.Permission)

@@ -62,7 +62,7 @@ namespace code_match_backend.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<User>> GetUser(long id)
         {
-            var user = await _context.Users.FindAsync(id);
+            var user = await _context.Users.Include(c => c.Company).SingleAsync(i => i.UserID == id);
 
 
             if (user == null)

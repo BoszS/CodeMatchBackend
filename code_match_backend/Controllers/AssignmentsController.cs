@@ -260,6 +260,8 @@ namespace code_match_backend.Controllers
         [HttpPost]
         public async Task<ActionResult<Assignment>> PostAssignment(Assignment assignment)
         {
+            _context.Entry(assignment.Company).State = EntityState.Unchanged;
+
             _context.Assignments.Add(assignment);
             await _context.SaveChangesAsync();
 

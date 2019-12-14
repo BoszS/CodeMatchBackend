@@ -65,6 +65,8 @@ namespace code_match_backend.Controllers
             User user = await _context.Users.FindAsync(id);
             return await _context.Notification.Where(n => n.Receiver == user && n.Read == false && n.ApplicationID != null)
                 .Include(n => n.Sender).ThenInclude(a => a.Company)
+                .Include(n => n.Sender).ThenInclude(a => a.Maker)
+                .ThenInclude(m => m.MakerTags).ThenInclude(mt => mt.Tag)
                 .Include(n => n.Application).ThenInclude(a => a.Assignment)
                 .Include(n => n.Application).ThenInclude(a => a.Maker).ToListAsync();
         }

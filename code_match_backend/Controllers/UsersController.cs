@@ -55,7 +55,9 @@ namespace code_match_backend.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<User>>> GetUsers()
         {
-            return await _context.Users.ToListAsync();
+            return await _context.Users.Include(x => x.Role)
+                        .ThenInclude(x => x.RolePermissions)
+                            .ThenInclude(x => x.Permission).ToListAsync();
         }
 
         // GET: api/Users/5
@@ -202,7 +204,7 @@ namespace code_match_backend.Controllers
             {
                 return NotFound();
             }
-
+          
             _context.Users.Remove(user);
             await _context.SaveChangesAsync();
 

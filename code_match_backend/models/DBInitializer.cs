@@ -280,7 +280,6 @@ namespace code_match_backend.models
             {
                 Assignment = context.Assignments.FirstOrDefault(),
                 Description = "very good",
-                Receiver = context.Users.Where(r => r.Email == "maker@test.com").Single(),
                 Sender = context.Users.Where(r => r.Email == "company@test.com").Single()
             });
 

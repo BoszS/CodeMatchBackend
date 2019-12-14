@@ -93,7 +93,8 @@ namespace code_match_backend.Controllers
             {
 
                 var userWithType = await _context.Users
-                    .Include(x => x.Company)
+                    .Include(x => x.Company).ThenInclude(x=> x.Assignments).ThenInclude(x => x.Applications).ThenInclude(x => x.Maker).ThenInclude(x => x.User).ThenInclude(x => x.ReceivedReviews)
+                    .Include(x => x.Company).ThenInclude(x => x.Assignments).ThenInclude(x => x.Reviews)
                     .Include(x => x.Role)
                         .ThenInclude(x => x.RolePermissions)
                             .ThenInclude(x => x.Permission)
@@ -107,8 +108,9 @@ namespace code_match_backend.Controllers
             if (user.MakerID != null)
             {
                 var userWithType = await _context.Users
-                    .Include(x => x.Maker).ThenInclude(m => m.Applications).ThenInclude(a => a.Assignment).ThenInclude(a => a.Company)
-                    .Include(x => x.Maker).ThenInclude(m => m.Applications).ThenInclude(a => a.Assignment).ThenInclude(a => a.Applications).ThenInclude(a => a.Maker)
+                    .Include(x => x.Maker).ThenInclude(m => m.Applications).ThenInclude(a => a.Assignment).ThenInclude(a => a.Company).ThenInclude(a => a.User).ThenInclude(a => a.ReceivedReviews)
+                    .Include(x => x.Maker).ThenInclude(m => m.Applications).ThenInclude(a => a.Assignment).ThenInclude(a => a.Applications).ThenInclude(a => a.Maker).ThenInclude(a => a.User).ThenInclude(a => a.ReceivedReviews)
+                    .Include(x => x.Maker).ThenInclude(m => m.Applications).ThenInclude(a => a.Assignment).ThenInclude(a => a.Reviews)
                     .Include(x => x.Role)
                         .ThenInclude(x => x.RolePermissions)
                             .ThenInclude(x => x.Permission)

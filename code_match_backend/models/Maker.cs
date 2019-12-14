@@ -14,6 +14,7 @@ namespace code_match_backend.models
         public DateTime Dob { get; set; }
         public string LinkedIn { get; set; }
         public string Experience { get; set; }
+        public User User { get; set; }
         public ICollection<Application> Applications { get; set; }
         public ICollection<MakerTag> MakerTags { get; set; }
     }

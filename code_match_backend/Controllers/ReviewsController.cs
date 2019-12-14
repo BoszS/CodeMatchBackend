@@ -118,8 +118,27 @@ namespace code_match_backend.Controllers
 
         // POST: api/Reviews
         [HttpPost]
-        public async Task<ActionResult<Review>> PostReview(Review review)
+        public async Task<ActionResult<Review>> PostReview(ReviewDto reviewDto)
         {
+            var review = new Review();
+            if (reviewDto.AssignmentID !=0)
+            {
+                review = new Review
+                {
+                    UserIDSender = reviewDto.SenderID,
+                    Description = reviewDto.description,
+                    AssignmentID = reviewDto.AssignmentID
+                };
+            } else
+            {
+                review = new Review
+                {
+                    UserIDSender = reviewDto.SenderID,
+                    Description = reviewDto.description,
+                    UserIDReceiver = reviewDto.ReceiverID
+                };
+            }
+
             _context.Reviews.Add(review);
             await _context.SaveChangesAsync();
 

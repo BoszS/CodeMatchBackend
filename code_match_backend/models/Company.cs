@@ -11,6 +11,7 @@ namespace code_match_backend.models
         public string Name { get; set; }
         public string StreetAdress { get; set; }
         public int PostalCode { get; set; }
+        public User User { get; set; }
         public ICollection<Assignment> Assignments { get; set; }
         public ICollection<CompanyTag> CompanyTags { get; set; }
     }

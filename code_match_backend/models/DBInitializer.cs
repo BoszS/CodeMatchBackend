@@ -109,7 +109,7 @@ namespace code_match_backend.models
                 Firstname = "te",
                 Lastname = "st",
                 LinkedIn = "www.link.com",
-                Nickname= "Test"
+                Nickname = "Test"
             },
             new Maker
             {
@@ -247,7 +247,7 @@ namespace code_match_backend.models
                 IsAccepted = true,
                 Assignment = context.Assignments.Where(r => r.Name == "Het bakkerij datamodel").Single(),
                 Maker = context.Makers.FirstOrDefault()
-            }, 
+            },
             new Application
             {
                 IsAccepted = true,
@@ -374,7 +374,7 @@ namespace code_match_backend.models
             context.SaveChanges();
 
             context.CompanyTags.AddRange(new CompanyTag
-            { 
+            {
 
                 CompanyID = 1,
                 TagID = 2
@@ -390,33 +390,12 @@ namespace code_match_backend.models
                     Receiver = context.Users.Single(u => u.Email == "company@test.com"),
                     ApplicationID = 2,
                     Read = false
-                },
+                }, 
                 new Notification
                 {
                     Sender = context.Users.FirstOrDefault(),
                     Receiver = context.Users.Single(u => u.Email == "company@test.com"),
-                    ApplicationID = 2,
-                    Read = false
-                },
-                new Notification
-                {
-                    Sender = context.Users.FirstOrDefault(),
-                    Receiver = context.Users.Single(u => u.Email == "company@test.com"),
-                    ApplicationID = 2,
-                    Read = false
-                },
-                new Notification
-                {
-                    Sender = context.Users.FirstOrDefault(),
-                    Receiver = context.Users.Single(u => u.Email == "company@test.com"),
-                    ApplicationID = 2,
-                    Read = false
-                },
-                new Notification
-                {
-                    Sender = context.Users.FirstOrDefault(),
-                    Receiver = context.Users.Single(u => u.Email == "company@test.com"),
-                    ApplicationID = 2,
+                    ApplicationID = 1,
                     Read = false
                 },
                 new Notification
@@ -445,7 +424,7 @@ namespace code_match_backend.models
 
             context.AssignmentTags.AddRange(
             new AssignmentTag
-            { 
+            {
                 AssignmentID = 1,
                 TagID = 12
             },
@@ -466,76 +445,76 @@ namespace code_match_backend.models
             },
             new AssignmentTag
             {
-               
+
 
                 AssignmentID = 2,
                 TagID = 7
             },
             new AssignmentTag
             {
-                
+
 
                 AssignmentID = 2,
                 TagID = 2
             },
             new AssignmentTag
             {
-                
+
 
                 AssignmentID = 3,
                 TagID = 15
             },
             new AssignmentTag
             {
-                
+
 
                 AssignmentID = 4,
                 TagID = 13
             },
             new AssignmentTag
             {
-                
+
 
                 AssignmentID = 4,
                 TagID = 6
             },
             new AssignmentTag
             {
-               
+
 
                 AssignmentID = 5,
                 TagID = 6
             },
             new AssignmentTag
             {
-                
+
 
                 AssignmentID = 5,
                 TagID = 13
             },
             new AssignmentTag
             {
-               
+
 
                 AssignmentID = 6,
                 TagID = 13
             },
             new AssignmentTag
             {
-                
+
 
                 AssignmentID = 6,
                 TagID = 6
             },
             new AssignmentTag
             {
-              
+
 
                 AssignmentID = 6,
                 TagID = 12
             },
             new AssignmentTag
-            { 
+            {
 
                 AssignmentID = 6,
                 TagID = 5

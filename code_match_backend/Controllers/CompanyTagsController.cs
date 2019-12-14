@@ -129,6 +129,22 @@ namespace code_match_backend.Controllers
             return companyTag;
         }
 
+        // DELETE: api/CompanyTags/5/2
+        [HttpDelete("{companyId}/{tagId}")]
+        public async Task<ActionResult<CompanyTag>> DeleteCompanyTagByMakedIdAndTagId(long companyId, long tagId)
+        {
+            var compantTag = await _context.CompanyTags.FirstOrDefaultAsync(x => x.CompanyID == companyId && x.TagID == tagId);
+            if (compantTag == null)
+            {
+                return NotFound();
+            }
+
+            _context.CompanyTags.Remove(compantTag);
+            await _context.SaveChangesAsync();
+
+            return compantTag;
+        }
+
         private bool CompanyTagExists(long id)
         {
             return _context.CompanyTags.Any(e => e.CompanyTagID == id);

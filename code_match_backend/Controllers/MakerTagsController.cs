@@ -116,6 +116,22 @@ namespace code_match_backend.Controllers
             return makerTag;
         }
 
+        // DELETE: api/MakerTags/5/2
+        [HttpDelete("{makerId}/{tagId}")]
+        public async Task<ActionResult<MakerTag>> DeleteMakerTagByMakedIdAndTagId(long makerId, long tagId)
+        {
+            var makerTag = await _context.MakerTags.FirstOrDefaultAsync(x => x.MakerID == makerId && x.TagID == tagId);
+            if (makerTag == null)
+            {
+                return NotFound();
+            }
+
+            _context.MakerTags.Remove(makerTag);
+            await _context.SaveChangesAsync();
+
+            return makerTag;
+        }
+
         private bool MakerTagExists(long id)
         {
             return _context.MakerTags.Any(e => e.MakerTagID == id);

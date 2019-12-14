@@ -47,7 +47,7 @@ namespace code_match_backend.Controllers
         public async Task<ActionResult<IEnumerable<Assignment>>> GetInitialAssignments()
         {
             return await _context.Assignments
-                .Include(a => a.Company)
+                .Include(a => a.Company).ThenInclude(a => a.User)
                 .Include(a => a.Applications)
                 .Include(a => a.AssignmentTags)
                 .ThenInclude(at => at.Tag)

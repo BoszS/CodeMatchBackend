@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using code_match_backend.models;
+using System.Collections;
 
 namespace code_match_backend.Controllers
 {
@@ -40,6 +41,24 @@ namespace code_match_backend.Controllers
 
             return makerTag;
         }
+
+        // GET: api/MakerTags/Maker/5
+        [HttpGet("Maker/{id}")]
+        public async Task<ActionResult<IEnumerable<MakerTag>>> GetMakerTagsByMakerId(long id)
+        {
+            var tags = _context.MakerTags
+                .Include(x => x.Tag)
+                .Where(x => x.MakerID == id);
+
+            if (tags == null)
+            {
+                return NotFound();
+            }
+
+            return await tags.ToListAsync();
+        }
+
+        
 
         // PUT: api/MakerTags/5
         [HttpPut("{id}")]

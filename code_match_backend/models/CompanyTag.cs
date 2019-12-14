@@ -8,6 +8,8 @@ namespace code_match_backend.models
     public class CompanyTag
     {
         public long CompanyTagID { get; set; }
+        public long CompanyID { get; set; }
+        public long TagID { get; set; }
         public Company Company { get; set; }
         public Tag Tag { get; set; }
     }

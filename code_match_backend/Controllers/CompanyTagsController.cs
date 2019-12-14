@@ -41,6 +41,38 @@ namespace code_match_backend.Controllers
             return companyTag;
         }
 
+        // GET: api/MakerTags/Company/5
+        [HttpGet("Company/{id}")]
+        public async Task<ActionResult<IEnumerable<CompanyTag>>> GetCompanyTagsByCompanyId(long id)
+        {
+            var tags = _context.CompanyTags
+                .Include(x => x.Tag)
+                .Where(x => x.CompanyID == id);
+
+            if (tags == null)
+            {
+                return NotFound();
+            }
+
+            return await tags.ToListAsync();
+        }
+
+        // GET: api/MakerTags/Company/Without/5
+        [HttpGet("Company/Without/{id}")]
+        public async Task<ActionResult<IEnumerable<CompanyTag>>> GetAllCompanyTagsWithoutCompanyId(long id)
+        {
+            var tags = _context.CompanyTags
+                .Include(x => x.Tag)
+                .Where(x => x.CompanyID != id);
+
+            if (tags == null)
+            {
+                return NotFound();
+            }
+
+            return await tags.ToListAsync();
+        }
+
         // PUT: api/CompanyTags/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutCompanyTag(long id, CompanyTag companyTag)

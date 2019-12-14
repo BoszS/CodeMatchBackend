@@ -141,7 +141,7 @@ namespace code_match_backend.Controllers
         /// </summary>
         /// <param name="id">The maker id</param>   
         /// <returns>The list of assignments that the maker is accepted for and are inProgress</returns>
-        [Authorize]
+        //[Authorize]
         [HttpGet("inProgress/maker/{id}")]
         public async Task<ActionResult<IEnumerable<Assignment>>> GetInProgressAssignmentsByMaker(long id)
         {

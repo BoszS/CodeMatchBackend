@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using code_match_backend.models;
+using System.Collections;
 
 namespace code_match_backend.Controllers
 {
@@ -39,6 +40,72 @@ namespace code_match_backend.Controllers
             }
 
             return tag;
+        }
+
+        // GET: api/Tags/Maker/Without/5
+        [HttpGet("Maker/Without/{id}")]
+        public async Task<ActionResult<IEnumerable<Tag>>> GetAllMakerTagsWithoutMakerId(long id)
+        {
+            var tags = _context.MakerTags
+                .Include(x => x.Tag)
+                .Where(x => x.MakerID == id);
+
+            var allTags = await _context.Tags.ToListAsync();
+
+            var tagIds = new ArrayList();
+
+            Tag newTag = new Tag();
+
+            foreach (var tag in tags)
+            {
+                tagIds.Add(tag.TagID);
+            }
+
+            foreach (var tagId in tagIds)
+            {
+                var tag = await _context.Tags.FindAsync(tagId);
+                allTags.Remove(tag);
+            }
+
+            if (tags == null)
+            {
+                return NotFound();
+            }
+
+            return allTags;
+        }
+
+        // GET: api/Tags/Company/Without/5
+        [HttpGet("Company/Without/{id}")]
+        public async Task<ActionResult<IEnumerable<Tag>>> GetAllMakerTagsWithoutCompanyId(long id)
+        {
+            var tags = _context.CompanyTags
+                .Include(x => x.Tag)
+                .Where(x => x.CompanyID == id);
+
+            var allTags = await _context.Tags.ToListAsync();
+
+            var tagIds = new ArrayList();
+
+            Tag newTag = new Tag();
+
+            foreach (var tag in tags)
+            {
+                tagIds.Add(tag.TagID);
+            }
+
+            foreach (var tagId in tagIds)
+            {
+                var tag = await _context.Tags.FindAsync(tagId);
+                allTags.Remove(tag);
+            }
+
+            if (tags == null)
+            {
+                return NotFound();
+            }
+
+            return allTags;
         }
 
         // PUT: api/Tags/5

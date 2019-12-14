@@ -19,26 +19,6 @@ namespace code_match_backend.models
             context.Permissions.AddRange(
             new Permission
             {
-                Name = "MakerSearchApplyAssignment"
-            },
-            new Permission
-            {
-                Name = "CompanyCreateAssignment"
-            },
-            new Permission
-            {
-                Name = "AdminCRUDReview"
-            },
-            new Permission
-            {
-                Name = "AdminCRUDUsers"
-            },
-            new Permission
-            {
-                Name = "AdminCRUDAssignments"
-            },
-            new Permission
-            {
                 Name = "update_maker_profile"
             },
             new Permission
@@ -75,48 +55,23 @@ namespace code_match_backend.models
             context.RolePermissions.AddRange(
             new RolePermission
             {
-                Permission = context.Permissions.FirstOrDefault(),
-                Role = context.Roles.FirstOrDefault()
+                RoleID = 1,
+                PermissionID = 1
             },
             new RolePermission
             {
-                Permission = context.Permissions.SingleOrDefault(p => p.PermissionID == 2),
-                Role = context.Roles.SingleOrDefault(r => r.RoleID == 2)
+                RoleID = 1,
+                PermissionID = 3
             },
             new RolePermission
             {
-                Permission = context.Permissions.SingleOrDefault(p => p.PermissionID == 3),
-                Role = context.Roles.SingleOrDefault(r => r.RoleID == 3)
+                RoleID = 2,
+                PermissionID = 2
             },
             new RolePermission
             {
-                Permission = context.Permissions.SingleOrDefault(p => p.PermissionID == 4),
-                Role = context.Roles.SingleOrDefault(r => r.RoleID == 3)
-            },
-            new RolePermission
-            {
-                Permission = context.Permissions.SingleOrDefault(p => p.PermissionID == 5),
-                Role = context.Roles.SingleOrDefault(r => r.RoleID == 3)
-            },
-            new RolePermission
-            {
-                Permission = context.Permissions.SingleOrDefault(p => p.PermissionID == 6),
-                Role = context.Roles.FirstOrDefault()
-            },
-            new RolePermission
-            {
-                Permission = context.Permissions.SingleOrDefault(p => p.PermissionID == 7),
-                Role = context.Roles.SingleOrDefault(r => r.RoleID == 2)
-            },
-            new RolePermission
-            {
-                Permission = context.Permissions.SingleOrDefault(p => p.PermissionID == 8),
-                Role = context.Roles.FirstOrDefault()
-            },
-            new RolePermission
-            {
-                Permission = context.Permissions.SingleOrDefault(p => p.PermissionID == 9),
-                Role = context.Roles.SingleOrDefault(r => r.RoleID == 2)
+                RoleID = 2,
+                PermissionID = 4
             }
             );
 
@@ -134,7 +89,14 @@ namespace code_match_backend.models
                 StreetAdress = "Biezenveld 34",
                 PostalCode = 2460,
                 Name = "Geko bvba"
-            });
+            },
+            new Company
+            {
+                StreetAdress = "Gasthuisstraat 102",
+                PostalCode = 2300,
+                Name = "MusicMaestro"
+            }
+            );
 
 
             context.SaveChanges();
@@ -203,6 +165,15 @@ namespace code_match_backend.models
                 Phonenumber = "0483473626",
                 Role = context.Roles.SingleOrDefault(r => r.RoleID == 2),
                 CompanyID = 2
+            },
+            new User
+            {
+                Biography = "Mensen gepasioneerd door muziek!",
+                Email = "maestro@live.com",
+                Password = "muziek",
+                Phonenumber = "014856478",
+                Role = context.Roles.SingleOrDefault(r => r.RoleID == 2),
+                CompanyID = 3
             }
             );
 
@@ -255,6 +226,16 @@ namespace code_match_backend.models
                 Description = "Hallo, ik ben directeur Bart. Ik ben op zoek naar iemand die voor mijn prestigieuze school een website kan maken! Ik ben op zoek naar een vriendelijke student/freelancer" +
                 "die me hierbij kan helpen",
                 Name = "De school website"
+            },
+            new Assignment
+            {
+                Status = "InProgress",
+                StreetAdress = "Gasthuisstraat 102",
+                PostalCode = 2300,
+                Company = context.Companies.SingleOrDefault(x => x.CompanyID == 3),
+                Description = "Hey, wij binnen MusicMaestro zoeken een gedreven persoon met IT-kennis die het ziet zitten om een website voor ons te bouwen." +
+                "Hierbij staat een goede vergoeding vast!",
+                Name = "Website voor een muziekwinkel"
             }
             );
 
@@ -278,6 +259,12 @@ namespace code_match_backend.models
                 IsAccepted = true,
                 Assignment = context.Assignments.Where(r => r.Name == "De online bakkerij database").Single(),
                 Maker = context.Makers.FirstOrDefault()
+            },
+            new Application
+            {
+                IsAccepted = true,
+                Assignment = context.Assignments.Where(r => r.Name == "Website voor een muziekwinkel").Single(),
+                Maker = context.Makers.SingleOrDefault(r => r.MakerID == 2)
             }
             );
 
@@ -359,17 +346,40 @@ namespace code_match_backend.models
 
             context.MakerTags.AddRange(new MakerTag
             {
-                Maker = context.Makers.FirstOrDefault(),
-                Tag = context.Tags.Single(r => r.Name == "Front-end")
-            });
+                MakerID = 1,
+                TagID = 1
+            },
+            new MakerTag
+            {
+                MakerID = 2,
+                TagID = 12
+            },
+            new MakerTag
+            {
+                MakerID = 2,
+                TagID = 13
+            },
+            new MakerTag
+            {
+                MakerID = 2,
+                TagID = 6
+            },
+            new MakerTag
+            {
+                MakerID = 2,
+                TagID = 5
+            }
+            );
 
             context.SaveChanges();
 
             context.CompanyTags.AddRange(new CompanyTag
-            {
-                Company = context.Companies.FirstOrDefault(),
-                Tag = context.Tags.Single(r => r.Name == "Back-end")
-            });
+            { 
+
+                CompanyID = 1,
+                TagID = 2
+            }
+            );
             context.SaveChanges();
 
 
@@ -435,59 +445,100 @@ namespace code_match_backend.models
 
             context.AssignmentTags.AddRange(
             new AssignmentTag
-            {
-                Assignment = context.Assignments.FirstOrDefault(),
-                Tag = context.Tags.Single(r => r.Name == "HTML")
+            { 
+                AssignmentID = 1,
+                TagID = 12
             },
             new AssignmentTag
             {
-                Assignment = context.Assignments.FirstOrDefault(),
-                Tag = context.Tags.Single(r => r.Name == "CSS")
+                AssignmentID = 1,
+                TagID = 13
             },
             new AssignmentTag
             {
-                Assignment = context.Assignments.FirstOrDefault(),
-                Tag = context.Tags.Single(r => r.Name == "Design")
+                AssignmentID = 1,
+                TagID = 6
             },
             new AssignmentTag
             {
-                Assignment = context.Assignments.SingleOrDefault(a => a.AssignmentID == 2),
-                Tag = context.Tags.Single(r => r.Name == "Sql")
+                AssignmentID = 2,
+                TagID = 14
             },
             new AssignmentTag
             {
-                Assignment = context.Assignments.SingleOrDefault(a => a.AssignmentID == 2),
-                Tag = context.Tags.Single(r => r.Name == "Datamodeling")
+               
+
+                AssignmentID = 2,
+                TagID = 7
             },
             new AssignmentTag
             {
-                Assignment = context.Assignments.SingleOrDefault(a => a.AssignmentID == 2),
-                Tag = context.Tags.Single(r => r.Name == "Back-end")
+                
+
+                AssignmentID = 2,
+                TagID = 2
             },
             new AssignmentTag
             {
-                Assignment = context.Assignments.SingleOrDefault(a => a.AssignmentID == 3),
-                Tag = context.Tags.Single(r => r.Name == ".NET")
+                
+
+                AssignmentID = 3,
+                TagID = 15
             },
             new AssignmentTag
             {
-                Assignment = context.Assignments.SingleOrDefault(a => a.AssignmentID == 4),
-                Tag = context.Tags.Single(r => r.Name == "CSS")
+                
+
+                AssignmentID = 4,
+                TagID = 13
             },
             new AssignmentTag
             {
-                Assignment = context.Assignments.SingleOrDefault(a => a.AssignmentID == 4),
-                Tag = context.Tags.Single(r => r.Name == "Design")
+                
+
+                AssignmentID = 4,
+                TagID = 6
             },
             new AssignmentTag
             {
-                Assignment = context.Assignments.SingleOrDefault(a => a.AssignmentID == 5),
-                Tag = context.Tags.Single(r => r.Name == "Design")
+               
+
+                AssignmentID = 5,
+                TagID = 6
             },
             new AssignmentTag
             {
-                Assignment = context.Assignments.SingleOrDefault(a => a.AssignmentID == 5),
-                Tag = context.Tags.Single(r => r.Name == "CSS")
+                
+
+                AssignmentID = 5,
+                TagID = 13
+            },
+            new AssignmentTag
+            {
+               
+
+                AssignmentID = 6,
+                TagID = 13
+            },
+            new AssignmentTag
+            {
+                
+
+                AssignmentID = 6,
+                TagID = 6
+            },
+            new AssignmentTag
+            {
+              
+
+                AssignmentID = 6,
+                TagID = 12
+            },
+            new AssignmentTag
+            { 
+
+                AssignmentID = 6,
+                TagID = 5
             }
             );
             context.SaveChanges();

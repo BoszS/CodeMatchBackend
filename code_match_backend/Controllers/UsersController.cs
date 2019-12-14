@@ -204,7 +204,27 @@ namespace code_match_backend.Controllers
             {
                 return NotFound();
             }
-          
+            var reviews = await _context.Reviews.Where(r => r.UserIDReceiver==user.UserID || r.UserIDSender == user.UserID).ToListAsync();
+
+            
+            foreach (var review in reviews)
+            {
+                var notifications = await _context.Notification.Where(n => n.ReviewID == review.ReviewID).ToListAsync();
+                foreach (var not in notifications)
+                {
+                    _context.Notification.Remove(not);
+
+                }
+                
+                _context.Reviews.Remove(review);
+            }
+
+            var notificationsa = await _context.Notification.Where(r => r.SenderID == user.UserID || r.ReceiverID == user.UserID).ToListAsync();
+            foreach (var not in notificationsa)
+            {
+                _context.Notification.Remove(not);
+            }
+
             _context.Users.Remove(user);
             await _context.SaveChangesAsync();
 

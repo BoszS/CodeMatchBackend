@@ -122,7 +122,7 @@ namespace code_match_backend.Controllers
             var assignments = await _context.Assignments.Where(m => m.Company == company && m.Status == "Completed").Include(a => a.Company)
                 .Include(a => a.Applications)
                 .Include(a => a.AssignmentTags)
-                .ThenInclude(at => at.Tag).ToListAsync();      
+                .ThenInclude(at => at.Tag).ToListAsync();
 
             return assignments;
         }
@@ -143,11 +143,11 @@ namespace code_match_backend.Controllers
                 .ThenInclude(a => a.Tag)
                 .ToListAsync();
             var lijst = new List<Assignment>();
-            foreach(var app in applications)
+            foreach (var app in applications)
             {
                 lijst.Add(app.Assignment);
             }
-            
+
             return lijst;
         }
 
@@ -166,7 +166,7 @@ namespace code_match_backend.Controllers
             var applications = await _context.Applications.Where(m => m.Maker == maker && m.IsAccepted == true).Include(a => a.Assignment).ThenInclude(a => a.Company)
                 .Include(a => a.Assignment).ThenInclude(a => a.Applications)
                 .Include(a => a.Assignment).ThenInclude(a => a.AssignmentTags)
-                .ThenInclude(a => a.Tag).Where(a => a.Assignment.Status=="InProgress").ToListAsync();
+                .ThenInclude(a => a.Tag).Where(a => a.Assignment.Status == "InProgress").ToListAsync();
             var lijst = new List<Assignment>();
             foreach (var app in applications)
             {
@@ -280,6 +280,24 @@ namespace code_match_backend.Controllers
             if (assignment == null)
             {
                 return NotFound();
+            }
+
+            var notifications = await _context.Notification.Where(n => n.AssignmentID == id).ToListAsync();
+            foreach (var not in notifications)
+            {
+                _context.Notification.Remove(not);
+
+            }
+
+            var applications = await _context.Applications.Where(a => a.AssignmentID == id).ToListAsync();
+            foreach (var app in applications)
+            {
+                var notificationsa = await _context.Notification.Where(n => n.ApplicationID == app.ApplicationID).ToListAsync();
+                foreach (var not in notificationsa)
+                {
+                    _context.Notification.Remove(not);
+                }
+                _context.Applications.Remove(app);
             }
 
             _context.Assignments.Remove(assignment);

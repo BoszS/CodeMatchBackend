@@ -155,6 +155,15 @@ namespace code_match_backend.Controllers
                 return NotFound();
             }
 
+            var notifications = await _context.Notification.Where(n => n.ReviewID == review.ReviewID).ToListAsync();
+            foreach (var not in notifications)
+            {
+                _context.Notification.Remove(not);
+
+            }
+
+            _context.Reviews.Remove(review);
+
             _context.Reviews.Remove(review);
             await _context.SaveChangesAsync();
 

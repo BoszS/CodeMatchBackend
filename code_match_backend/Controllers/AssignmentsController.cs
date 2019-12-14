@@ -207,7 +207,10 @@ namespace code_match_backend.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Assignment>> GetAssignment(long id)
         {
-            var assignment = await _context.Assignments.FindAsync(id);
+            var assignment = await _context.Assignments.Where(a => a.AssignmentID == id)
+                .Include(a => a.Company).ThenInclude(m => m.User)
+                .Include(a => a.Applications).ThenInclude(a => a.Maker).ThenInclude(m => m.User)
+                .FirstOrDefaultAsync(a => a.AssignmentID == id);
 
             if (assignment == null)
             {

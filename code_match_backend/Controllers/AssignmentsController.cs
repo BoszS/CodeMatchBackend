@@ -210,6 +210,7 @@ namespace code_match_backend.Controllers
             var assignment = await _context.Assignments.Where(a => a.AssignmentID == id)
                 .Include(a => a.Company).ThenInclude(m => m.User)
                 .Include(a => a.Applications).ThenInclude(a => a.Maker).ThenInclude(m => m.User)
+                .Include(a => a.AssignmentTags).ThenInclude(t => t.Tag)
                 .FirstOrDefaultAsync(a => a.AssignmentID == id);
 
             if (assignment == null)

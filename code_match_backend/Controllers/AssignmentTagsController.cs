@@ -106,6 +106,38 @@ namespace code_match_backend.Controllers
             return NoContent();
         }
 
+        [HttpPost]
+        [Route("addOrDeleteAssignmentTags")]
+        public async Task<ActionResult<AssignmentTag>> PostOrDeleteAssignmentTags(long assignmentID, Tag[] tagList)
+        {
+            AssignmentTag assignmentTag;
+
+            var assignment = _context.Assignments.Where(i => i.AssignmentID == assignmentID).FirstOrDefault();
+
+            var assignmentTags = _context.AssignmentTags.Where(a => a.Assignment.AssignmentID == assignment.AssignmentID).ToList();
+
+            foreach(var assignmentTag2 in assignmentTags)
+            {
+                _context.AssignmentTags.Remove(assignmentTag2);
+            }
+
+            foreach (var tag in tagList)
+            {
+                assignmentTag = new AssignmentTag();
+
+                assignmentTag.Tag = tag;
+                assignmentTag.AssignmentTagID = 0;
+                assignmentTag.Assignment = assignment;
+
+                _context.Entry(assignmentTag.Tag).State = EntityState.Unchanged;
+                _context.Entry(assignmentTag.Assignment).State = EntityState.Unchanged;
+
+                _context.AssignmentTags.Add(assignmentTag);
+                await _context.SaveChangesAsync();
+            }
+            return NoContent();
+        }
+
         // DELETE: api/AssignmentTags/5
         [HttpDelete("{id}")]
         public async Task<ActionResult<AssignmentTag>> DeleteAssignmentTag(long id)

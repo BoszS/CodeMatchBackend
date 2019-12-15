@@ -36,6 +36,18 @@ namespace code_match_backend.models
             new Permission
             {
                 Name = "not_admin"
+            },
+            new Permission
+            {
+                Name = "can_click_admin_link"
+            },
+            new Permission
+            {
+                Name = "can_click_assignments_link"
+            },
+            new Permission
+            {
+                Name = "can_click_notifications_link"
             }
             );
             context.SaveChanges();
@@ -86,6 +98,27 @@ namespace code_match_backend.models
             {
                 RoleID = 1,
                 PermissionID = 5
+            }
+            ,
+            new RolePermission
+            {
+                RoleID = 1,
+                PermissionID = 7
+            },
+            new RolePermission
+            {
+                RoleID = 3,
+                PermissionID = 6
+            },
+            new RolePermission
+            {
+                RoleID = 1,
+                PermissionID = 8
+            },
+            new RolePermission
+            {
+                RoleID = 2,
+                PermissionID = 8
             }
             );
 

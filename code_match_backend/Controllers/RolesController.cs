@@ -27,6 +27,20 @@ namespace code_match_backend.Controllers
             return await _context.Roles.ToListAsync();
         }
 
+        [HttpGet]
+        [Route("getCompany")]
+        public async Task<ActionResult<Role>> GetCompany()
+        {
+            return await _context.Roles.Where(c => c.Name == "Company").FirstOrDefaultAsync();
+        }
+
+        [HttpGet]
+        [Route("getMaker")]
+        public async Task<ActionResult<Role>> GetMaker()
+        {
+            return await _context.Roles.Where(c => c.Name == "Maker").FirstOrDefaultAsync();
+        }
+
         // GET: api/Roles/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Role>> GetRole(long id)

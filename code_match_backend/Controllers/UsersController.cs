@@ -186,6 +186,7 @@ namespace code_match_backend.Controllers
                 _context.Entry(user.Maker).State = EntityState.Modified;
             }
 
+            _context.Entry(user.Role).State = EntityState.Unchanged;
             _context.Users.Add(user);
 
             await _context.SaveChangesAsync();

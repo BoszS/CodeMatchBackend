@@ -181,7 +181,7 @@ namespace code_match_backend.models
             }, new User
             {
                 Biography = "Wij zijn Kwb Heultje en vertegenwoordigen kleine zelfstandigen.",
-                Email = "kwbHeultje@live.com",
+                Email = "kwbHeultje@live.be",
                 Password = "company123",
                 Phonenumber = "987654321",
                 RoleID = 2,
@@ -334,7 +334,7 @@ namespace code_match_backend.models
             {
                 Assignment = context.Assignments.FirstOrDefault(),
                 Description = "very good",
-                Sender = context.Users.Where(r => r.Email == "company@test.com").Single()
+                Sender = context.Users.Where(r => r.Email == "kwbHeultje@live.be").Single()
             });
 
             context.SaveChanges();
@@ -446,34 +446,34 @@ namespace code_match_backend.models
                 new Notification
                 {
                     Sender = context.Users.FirstOrDefault(),
-                    Receiver = context.Users.Single(u => u.Email == "company@test.com"),
+                    Receiver = context.Users.Single(u => u.Email == "kwbHeultje@live.be"),
                     ApplicationID = 2,
                     Read = false
                 }, 
                 new Notification
                 {
                     Sender = context.Users.FirstOrDefault(),
-                    Receiver = context.Users.Single(u => u.Email == "company@test.com"),
+                    Receiver = context.Users.Single(u => u.Email == "kwbHeultje@live.be"),
                     ApplicationID = 1,
                     Read = false
                 },
                 new Notification
                 {
-                    Sender = context.Users.Single(u => u.Email == "company@test.com"),
+                    Sender = context.Users.Single(u => u.Email == "kwbHeultje@live.be"),
                     Receiver = context.Users.FirstOrDefault(),
                     ApplicationID = 1,
                     Read = false
                 },
                 new Notification
                 {
-                    Sender = context.Users.Single(u => u.Email == "company@test.com"),
+                    Sender = context.Users.Single(u => u.Email == "kwbHeultje@live.be"),
                     Receiver = context.Users.FirstOrDefault(),
                     ReviewID = 1,
                     Read = false
                 },
                 new Notification
                 {
-                    Sender = context.Users.Single(u => u.Email == "company@test.com"),
+                    Sender = context.Users.Single(u => u.Email == "kwbHeultje@live.be"),
                     Receiver = context.Users.FirstOrDefault(),
                     AssignmentID = 3,
                     Read = false

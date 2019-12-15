@@ -100,7 +100,10 @@ namespace code_match_backend.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(review).State = EntityState.Modified;
+            var newReview = await _context.Reviews.SingleOrDefaultAsync(x => x.ReviewID == id);
+            newReview.Description = review.Description;
+
+            _context.Entry(newReview).State = EntityState.Modified;
 
             try
             {

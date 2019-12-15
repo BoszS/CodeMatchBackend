@@ -13,11 +13,12 @@ namespace code_match_backend.models
         public string Password { get; set; }
         public string Phonenumber { get; set; }
         public string Biography { get; set; }
-        public Role Role { get; set; }
+        public long RoleID { get; set; }
         public long? MakerID { get; set; }
-        public Maker Maker { get; set; }
         public long? CompanyID { get; set; }
         public Company Company { get; set; }
+        public Role Role { get; set; }
+        public Maker Maker { get; set; }
         public ICollection<Review> ReceivedReviews { get; set; }
         public ICollection<Review> SendReviews { get; set; }
 

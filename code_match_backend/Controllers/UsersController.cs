@@ -91,6 +91,17 @@ namespace code_match_backend.Controllers
                 return NotFound();
             }
 
+            if (user.CompanyID == null && user.MakerID == null)
+            {
+                var userWithType = await _context.Users
+                    .Include(x => x.Role).ThenInclude(x => x.RolePermissions).ThenInclude(x => x.Permission)
+                    .FirstOrDefaultAsync(x => x.UserID == id);
+
+                userWithType.Password = null;
+
+                return userWithType;
+            }
+
             if (user.CompanyID != null)
             {
 

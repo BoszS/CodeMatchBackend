@@ -125,7 +125,7 @@ namespace code_match_backend.models
 
             context.Users.AddRange(new User
             {
-                Role = context.Roles.FirstOrDefault(),
+                RoleID = 1,
                 Biography = "biobio",
                 Email = "maker@test.com",
                 Password = "maker123",
@@ -137,7 +137,7 @@ namespace code_match_backend.models
                 Email = "company@test.com",
                 Password = "company123",
                 Phonenumber = "987654321",
-                Role = context.Roles.SingleOrDefault(r => r.RoleID == 2),
+                RoleID = 2,
                 CompanyID = 1
             },
             new User
@@ -146,7 +146,7 @@ namespace code_match_backend.models
                 Email = "admin@test.com",
                 Password = "admin123",
                 Phonenumber = "987654321",
-                Role = context.Roles.SingleOrDefault(r => r.RoleID == 3),
+                RoleID = 3,
             },
             new User
             {
@@ -154,7 +154,7 @@ namespace code_match_backend.models
                 Email = "bosz.srisan@live.com",
                 Password = "bozie",
                 Phonenumber = "0483476363",
-                Role = context.Roles.FirstOrDefault(),
+                RoleID = 1,
                 MakerID = 2
             },
             new User
@@ -163,7 +163,7 @@ namespace code_match_backend.models
                 Email = "plastic@live.com",
                 Password = "plastic",
                 Phonenumber = "0483473626",
-                Role = context.Roles.SingleOrDefault(r => r.RoleID == 2),
+                RoleID = 2,
                 CompanyID = 2
             },
             new User
@@ -172,8 +172,15 @@ namespace code_match_backend.models
                 Email = "maestro@live.com",
                 Password = "muziek",
                 Phonenumber = "014856478",
-                Role = context.Roles.SingleOrDefault(r => r.RoleID == 2),
+                RoleID = 2,
                 CompanyID = 3
+            },
+            new User
+            {
+                Email = "bosz.admin@matchit.com",
+                Password = "admin",
+                Phonenumber = "0897635267",
+                RoleID = 3,
             }
             );
 

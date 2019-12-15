@@ -152,10 +152,10 @@ namespace code_match_backend.models
             new Maker
             {
                 Dob = new DateTime(1998, 3, 12),
-                Experience = "none",
+                Experience = "Ik ben een 3de jaars IT-student. Ik ben ervaren in C# en Angular",
                 Firstname = "Brecht",
                 Lastname = "Snoeck",
-                LinkedIn = "www.linkedIn/BrechtSnoeck",
+                LinkedIn = "www.linkedin.com/in/brecht-snoeck-564715142/",
                 Nickname = "Brekke"
             },
             new Maker
@@ -164,7 +164,7 @@ namespace code_match_backend.models
                 Experience = "C#, Angular",
                 Firstname = "Bosz",
                 Lastname = "Srisan",
-                LinkedIn = "www.linkedIn/BoszSrisan",
+                LinkedIn = "www.linkedin.com/in/boszsrisan",
                 Nickname = "Bozie",
             }
             );
@@ -173,15 +173,15 @@ namespace code_match_backend.models
             context.Users.AddRange(new User
             {
                 RoleID = 1,
-                Biography = "biobio",
-                Email = "maker@test.com",
+                Biography = "Hallo ik ben Brecht Snoeck. Ik ben geboren op 4 juli 1997. Ik houd van sport en IT.",
+                Email = "brecht.snoeck@live.be",
                 Password = "maker123",
                 Phonenumber = "123456789",
                 MakerID = 1
             }, new User
             {
-                Biography = "user 2 biography",
-                Email = "company@test.com",
+                Biography = "Wij zijn Kwb Heultje en vertegenwoordigen kleine zelfstandigen.",
+                Email = "kwbHeultje@live.com",
                 Password = "company123",
                 Phonenumber = "987654321",
                 RoleID = 2,

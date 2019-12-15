@@ -76,6 +76,16 @@ namespace code_match_backend.models
             {
                 RoleID = 2,
                 PermissionID = 4
+            },
+            new RolePermission
+            {
+                RoleID = 2,
+                PermissionID = 5
+            },
+            new RolePermission
+            {
+                RoleID = 1,
+                PermissionID = 5
             }
             );
 

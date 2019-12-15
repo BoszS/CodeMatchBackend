@@ -33,14 +33,19 @@ namespace code_match_backend.Controllers
         [HttpGet("sender/{id}")]
         public async Task<ActionResult<IEnumerable<Review>>> GetReviewsBySender(long id)
         {
-            return await _context.Reviews.Where(r => r.UserIDSender == id).Include(r => r.Receiver).ToListAsync();
+            return await _context.Reviews.Where(r => r.UserIDSender == id).Include(r => r.Receiver)
+                .ThenInclude(x => x.Role)
+                        .ThenInclude(x => x.RolePermissions)
+                            .ThenInclude(x => x.Permission).Include(r => r.Assignment).ToListAsync();
         }
 
         // GET: api/Reviews/receiver/5
         [HttpGet("receiver/{id}")]
         public async Task<ActionResult<IEnumerable<Review>>> GetReviewsByReceiver(long id)
         {
-            return await _context.Reviews.Where(r => r.UserIDReceiver == id).Include(r => r.Sender).ToListAsync();
+            return await _context.Reviews.Where(r => r.UserIDReceiver == id).Include(r => r.Sender).ThenInclude(x => x.Role)
+                        .ThenInclude(x => x.RolePermissions)
+                            .ThenInclude(x => x.Permission).ToListAsync();
         }
 
         // GET: api/Reviews/5
@@ -67,7 +72,7 @@ namespace code_match_backend.Controllers
         public async Task<ActionResult<Review>> GetAssignmentsByCompany(ReviewDto dto)
         {
             var review = new Review();
-            if (dto.AssignmentID !=0)
+            if (dto.AssignmentID != 0)
             {
                 review = await _context.Reviews
                     .Where(r => r.UserIDSender == dto.SenderID && r.AssignmentID == dto.AssignmentID).SingleOrDefaultAsync();
@@ -121,7 +126,7 @@ namespace code_match_backend.Controllers
         public async Task<ActionResult<Review>> PostReview(ReviewDto reviewDto)
         {
             var review = new Review();
-            if (reviewDto.AssignmentID !=0)
+            if (reviewDto.AssignmentID != 0)
             {
                 review = new Review
                 {
@@ -129,7 +134,8 @@ namespace code_match_backend.Controllers
                     Description = reviewDto.description,
                     AssignmentID = reviewDto.AssignmentID
                 };
-            } else
+            }
+            else
             {
                 review = new Review
                 {
@@ -154,6 +160,15 @@ namespace code_match_backend.Controllers
             {
                 return NotFound();
             }
+
+            var notifications = await _context.Notification.Where(n => n.ReviewID == review.ReviewID).ToListAsync();
+            foreach (var not in notifications)
+            {
+                _context.Notification.Remove(not);
+
+            }
+
+            _context.Reviews.Remove(review);
 
             _context.Reviews.Remove(review);
             await _context.SaveChangesAsync();

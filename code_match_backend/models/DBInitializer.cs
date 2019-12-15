@@ -32,6 +32,10 @@ namespace code_match_backend.models
             new Permission
             {
                 Name = "read_company_profile"
+            },
+            new Permission
+            {
+                Name = "not_admin"
             }
             );
             context.SaveChanges();

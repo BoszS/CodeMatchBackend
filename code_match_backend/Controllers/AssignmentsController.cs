@@ -48,7 +48,7 @@ namespace code_match_backend.Controllers
         {
             return await _context.Assignments
                 .Include(a => a.Company).ThenInclude(a => a.User)
-                .Include(a => a.Applications)
+                .Include(a => a.Applications).ThenInclude(a => a.Maker)
                 .Include(a => a.AssignmentTags)
                 .ThenInclude(at => at.Tag)
                 .Where(a => a.Status.Equals("Initial"))
@@ -65,7 +65,7 @@ namespace code_match_backend.Controllers
         {
             var company = await _context.Companies.FindAsync(id);
             var assignments = await _context.Assignments.Where(m => m.Company == company).Include(a => a.Company)
-                .Include(a => a.Applications)
+                .Include(a => a.Applications).ThenInclude(a => a.Maker)
                 .Include(a => a.AssignmentTags)
                 .ThenInclude(at => at.Tag).ToListAsync();
 
@@ -84,7 +84,7 @@ namespace code_match_backend.Controllers
         {
             var company = await _context.Companies.FindAsync(id);
             var assignments = await _context.Assignments.Where(m => m.Company == company && m.Status == "Initial").Include(a => a.Company)
-                .Include(a => a.Applications)
+                .Include(a => a.Applications).ThenInclude(a => a.Maker)
                 .Include(a => a.AssignmentTags)
                 .ThenInclude(at => at.Tag).ToListAsync();
 
@@ -102,7 +102,7 @@ namespace code_match_backend.Controllers
         {
             var company = await _context.Companies.FindAsync(id);
             var assignments = await _context.Assignments.Where(m => m.Company == company && m.Status == "InProgress").Include(a => a.Company)
-                .Include(a => a.Applications)
+                .Include(a => a.Applications).ThenInclude(a => a.Maker)
                 .Include(a => a.AssignmentTags)
                 .ThenInclude(at => at.Tag).ToListAsync();
 
@@ -120,7 +120,7 @@ namespace code_match_backend.Controllers
         {
             var company = await _context.Companies.FindAsync(id);
             var assignments = await _context.Assignments.Where(m => m.Company == company && m.Status == "Completed").Include(a => a.Company)
-                .Include(a => a.Applications)
+                .Include(a => a.Applications).ThenInclude(a => a.Maker)
                 .Include(a => a.AssignmentTags)
                 .ThenInclude(at => at.Tag).ToListAsync();
 
@@ -138,7 +138,7 @@ namespace code_match_backend.Controllers
         {
             var maker = await _context.Makers.FindAsync(id);
             var applications = await _context.Applications.Where(m => m.Maker == maker && m.IsAccepted == true).Include(a => a.Assignment).ThenInclude(a => a.Company)
-                .Include(a => a.Assignment).ThenInclude(a => a.Applications)
+                .Include(a => a.Assignment).ThenInclude(a => a.Applications).ThenInclude(a => a.Maker)
                 .Include(a => a.Assignment).ThenInclude(a => a.AssignmentTags)
                 .ThenInclude(a => a.Tag)
                 .ToListAsync();
@@ -164,7 +164,7 @@ namespace code_match_backend.Controllers
 
             var maker = await _context.Makers.FindAsync(id);
             var applications = await _context.Applications.Where(m => m.Maker == maker && m.IsAccepted == true).Include(a => a.Assignment).ThenInclude(a => a.Company)
-                .Include(a => a.Assignment).ThenInclude(a => a.Applications)
+                .Include(a => a.Assignment).ThenInclude(a => a.Applications).ThenInclude(a => a.Maker)
                 .Include(a => a.Assignment).ThenInclude(a => a.AssignmentTags)
                 .ThenInclude(a => a.Tag).Where(a => a.Assignment.Status == "InProgress").ToListAsync();
             var lijst = new List<Assignment>();
@@ -187,7 +187,7 @@ namespace code_match_backend.Controllers
         {
             var maker = await _context.Makers.FindAsync(id);
             var applications = await _context.Applications.Where(m => m.Maker == maker && m.IsAccepted == true).Include(a => a.Assignment).ThenInclude(a => a.Company)
-                .Include(a => a.Assignment).ThenInclude(a => a.Applications)
+                .Include(a => a.Assignment).ThenInclude(a => a.Applications).ThenInclude(a => a.Maker)
                 .Include(a => a.Assignment).ThenInclude(a => a.AssignmentTags)
                 .ThenInclude(a => a.Tag).Where(a => a.Assignment.Status == "Completed").ToListAsync();
             var lijst = new List<Assignment>();
